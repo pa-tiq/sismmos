@@ -1,4 +1,4 @@
-.sidebar{
+.sidebar {
   float: left;
   width: 28%;
   padding: 0;
@@ -7,20 +7,24 @@
 }
 
 .home {
-  float:left;
+  float: left;
   width: auto;
-  width:70%;
-  max-width: auto;  
+  width: 70%;
+  max-width: auto;
   padding: 3rem;
   text-align: center;
 }
 
-.homepage{
-  margin: 1rem;
+.homepage {
+  margin-top: -1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 600px) {
-  .home, .sidebar {
+  .home,
+  .sidebar {
     width: 100%;
     height: auto;
   }
