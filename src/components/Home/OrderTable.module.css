@@ -1,0 +1,28 @@
+.table {
+  border: 2px solid rgb(245, 238, 238);
+  margin: 0;
+  max-width: inherit;
+  font-size: large;
+}
+
+.th {
+  cursor: pointer;
+  padding: 5px;
+  max-width: inherit;
+}
+
+.tbody{
+  max-width: inherit;
+}
+
+.tr{
+  max-width: inherit;
+}
+
+.td {
+  border-top: 2px solid rgb(239, 233, 233);
+  cursor: auto;
+  padding: 5px;
+  width: fit-content;
+  max-width: inherit;
+}
