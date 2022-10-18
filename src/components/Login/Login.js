@@ -103,19 +103,19 @@ const Login = () => {
           onChange={emailChangeHandler}
           onBlur={validateEmailOnBlurHandler}
         />
-        {!emailIsValid && emailTouched && <p>Invalid e-mail.</p>}
+        {!emailIsValid && emailTouched && <p>E-mail inválido.</p>}
         <Input
           ref={passwordInputRef}
           isValid={passwordIsValid}
           wasTouched={passwordTouched}
-          label="Password"
+          label="Senha"
           type="password"
           id="password"
           value={passwordState.value}
           onChange={passwordChangeHandler}
           onBlur={validatePasswordOnBlurHandler}
         />
-        {!passwordIsValid && passwordTouched && <p>Invalid password.</p>}
+        {!passwordIsValid && passwordTouched && <p>Senha inválida.</p>}
         <div className={classes.actions}>
           <Button type="submit" className={classes.btn}>
             Login
