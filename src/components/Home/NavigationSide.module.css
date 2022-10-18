@@ -30,12 +30,13 @@
 }
 
 .nav a {
-  text-decoration: none;
+  font-weight: bold;
   color: white;
 }
 
 .nav a:hover,
 .nav a:active {
+  cursor: pointer;
   color: #f3cafb;
 }
 
