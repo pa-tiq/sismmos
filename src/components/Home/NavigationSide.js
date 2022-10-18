@@ -12,10 +12,10 @@ const NavigationSide = (props) => {
     <Card className={classes.nav}>
       <ul>
         <li>
-          <a id={props.views.welcome} onClick={viewChangeHandler}>Home</a>
+          <a id={props.views[0]} onClick={viewChangeHandler}>Home</a>
         </li>
         <li>
-          <a id={props.views.ordens} onClick={viewChangeHandler}>Dashboard</a>
+          <a id={props.views[1]} onClick={viewChangeHandler}>Dashboard</a>
         </li>
       </ul>
     </Card>
