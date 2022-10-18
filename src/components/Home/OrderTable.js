@@ -51,7 +51,8 @@ const OrderTable = (props) => {
     descending: false,
   });
   const [searchText, setSearchText] = useState("");
-  const [preSearchData, setPreSearchData] = useState(null);
+  const [visibleData, setVisibleData] = useState(DUMMY_DATA);
+  const [preSearchData, setPreSearchData] = useState([]);
 
   async function addOrderHandler(order) {
     const response = await fetch(
@@ -99,7 +100,7 @@ const OrderTable = (props) => {
   const sort = (e) => {
     const column = e.target.cellIndex;
     const descending = sorting.column === column && !sorting.descending;
-    const dataCopy = [...data];
+    const dataCopy = [...visibleData];
     dataCopy.sort((a, b) => {
       if (a[column] === b[column]) return 0;
       return descending
@@ -110,47 +111,55 @@ const OrderTable = (props) => {
         ? 1
         : -1;
     });
-    setData(dataCopy);
+    setVisibleData(dataCopy);
     setSorting({ column, descending });
   };
 
-  const searchInputChangeHandler = (e) => {
-    if (!e.target.value) {
-      setData(preSearchData);
+  useEffect(()=>{
+    if (searchText==='') {
+      setVisibleData(data);
       setPreSearchData(null);
       return;
     }
-    const needle = e.target.value.toLowerCase();
+    const needle = searchText.toLowerCase();
     let searchData = [];
     data.forEach((row) => {
-      if (
-        row.find((element) => {
-          if (element.toLowerCase().includes(needle)) return true;
-        })
-      ) {
+      const needleFoundInRow = row.find((element) => {
+        if (element.toLowerCase().includes(needle)) return true;
+      });
+      if (needleFoundInRow) {
         searchData.push(row);
       }
     });
     setPreSearchData(data);
-    setData(searchData);
+    setVisibleData(searchData);
+  },[searchText]);
+
+  const searchInputChangeHandler = (e) => {
+    setSearchText(e.target.value);    
   };
 
   const searchInput = (
-    <Input
-      label="Pesquisa"
-      type="input"
-      id="search"
-      value={searchInput}
-      onChange={searchInputChangeHandler}
-    />
+      <Input className={classes.searchInput}
+        label="Pesquisa"
+        type="input"
+        id="search"
+        onChange={searchInputChangeHandler}
+      >    
+      </Input>
   );
 
-  const filters = <Card></Card>;
+  const filters = (
+    <Card className={classes.search}>
+      {searchInput}
+    </Card>
+  );
 
   return (
     <Fragment>
       <h1>Ordens de Serviço</h1>
       {filters}
+      <Card>
       <table className={classes.table}>
         <thead onClick={sort}>
           <tr>
@@ -167,7 +176,7 @@ const OrderTable = (props) => {
           </tr>
         </thead>
         <tbody className={classes.tbody}>
-          {data.map((row, idx) => (
+          {visibleData.map((row, idx) => (
             <tr className={classes.tr} key={idx}>
               {row.map((cell, idx) => (
                 <td className={classes.td} key={idx}>
@@ -178,6 +187,7 @@ const OrderTable = (props) => {
           ))}
         </tbody>
       </table>
+      </Card>
     </Fragment>
   );
 };

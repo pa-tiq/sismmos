@@ -14,10 +14,13 @@ const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const emailReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
-    return { value: action.val, isValid: re.test(action.val)};
+    return { value: action.val, isValid: action.val.includes("@")};
   }
   if (action.type === "INPUT_BLUR") {
-    return { value: state.value, isValid: re.test(state.value)};
+    return { value: state.value, isValid: state.value.includes("@")};
+  }
+  if (action.type === "REGEX_FAIL") {
+    return { value: state.value, isValid: false};
   }
   return { value: "", isValid: false };
 };
@@ -78,6 +81,11 @@ const Login = () => {
     setEmailTouched(true);
     setPasswordTouched(true);
     if (emailIsValid && passwordIsValid) {
+      //if(!re.test(emailState.value)){
+      //  dispatchEmail({type:"REGEX_FAIL"});
+      //  emailInputRef.current.focus();
+      //  return;
+      //}
       authContext.onLogin(emailState.value, passwordState.value);
       setEmailTouched(false);
       setPasswordTouched(false);
