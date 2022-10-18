@@ -1,7 +1,27 @@
+.sidebar{
+  float: left;
+  width: 28%;
+  padding: 0;
+  margin-right: 2%;
+  margin-bottom: 2%;
+}
+
 .home {
-  width: 90%;
-  max-width: 40rem;
+  float:left;
+  width: auto;
+  width:70%;
+  max-width: auto;  
   padding: 3rem;
-  margin: 2rem auto;
   text-align: center;
+}
+
+.homepage{
+  margin: 1rem;
+}
+
+@media (max-width: 600px) {
+  .home, .sidebar {
+    width: 100%;
+    height: auto;
+  }
 }

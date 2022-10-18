@@ -1,8 +1,8 @@
 import React, {useContext} from "react";
 import AuthContext from "../../store/auth-context";
-import classes from "./Navigation.module.css";
+import classes from "./NavigationTop.module.css";
 
-const Navigation = () => {
+const NavigationTop = () => {
   const context = useContext(AuthContext);
   return (
     <nav className={classes.nav}>
@@ -27,4 +27,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default NavigationTop;

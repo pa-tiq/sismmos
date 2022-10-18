@@ -1,12 +1,12 @@
-import React from 'react';
-import Navigation from './Navigation';
+import React, { Fragment } from 'react';
+import NavigationTop from './NavigationTop';
 import classes from './MainHeader.module.css';
 
 const MainHeader = () => {
   return (
     <header className={classes['main-header']}>
-      <h1>A Typical Page</h1>
-      <Navigation/>
+      <h1>SisMMOS</h1>
+      <NavigationTop/>
     </header>
   );
 };
