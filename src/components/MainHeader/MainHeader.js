@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import NavigationTop from './NavigationTop';
 import classes from './MainHeader.module.css';
 
