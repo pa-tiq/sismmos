@@ -2,14 +2,33 @@
   display: flex;
 }
 
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title{
+  align-self: center;
+}
+
+.add{
+  font: inherit;
+  background: #dd0db0;
+  border: 1px solid #dd0db0;
+  padding: 0.5rem 1.5rem;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+  border-radius: 20px;
+}
+
 .filters{
   float: left;
   margin-left:1%;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-bottom: 2rem;
+  padding: 1.3rem;
   width: 100%;
-  text-align: center;
+  text-align: justify;
   vertical-align: middle;
 }
 
@@ -19,7 +38,7 @@
   padding-right:0.8rem;
   padding-top:0.2rem;
   padding-bottom:0.2rem;
-  max-width: 20rem;
+  max-width: 30rem;
 }
 
 .searchInput{
