@@ -50,9 +50,9 @@ const OrderTable = (props) => {
     column: null,
     descending: false,
   });
-  const [searchText, setSearchText] = useState("");
+  const [searchActive, setSearchActive] = useState(false);
+  const [preSearchData, setPreSearchData] = useState(null);
   const [visibleData, setVisibleData] = useState(DUMMY_DATA);
-  const [preSearchData, setPreSearchData] = useState([]);
 
   async function addOrderHandler(order) {
     const response = await fetch(
@@ -115,12 +115,14 @@ const OrderTable = (props) => {
     setSorting({ column, descending });
   };
 
-  useEffect(()=>{
+  const searchInputChangeHandler = (e) => {
+    const searchText = e.target.value;
     if (searchText==='') {
+      setSearchActive(false);
       setVisibleData(data);
-      setPreSearchData(null);
       return;
     }
+    setSearchActive(true);
     const needle = searchText.toLowerCase();
     let searchData = [];
     data.forEach((row) => {
@@ -131,31 +133,31 @@ const OrderTable = (props) => {
         searchData.push(row);
       }
     });
-    setPreSearchData(data);
-    setVisibleData(searchData);
-  },[searchText]);
-
-  const searchInputChangeHandler = (e) => {
-    setSearchText(e.target.value);    
+    setVisibleData(searchData);   
   };
 
-  const searchInput = (
-      <Input className={classes.searchInput}
-        label="Pesquisa"
-        type="input"
-        id="search"
-        onChange={searchInputChangeHandler}
-      >    
-      </Input>
-  );
+  const selectedChangeHandler = (e) => {
+    console.log(e.target.value);
+  };
 
   const filters = (
     <div className={classes.search_and_filters}>
     <Card className={classes.search}>
-      {searchInput}
+      <Input className={classes.searchInput}
+          label="Pesquisa"
+          type="input"
+          id="search"
+          onChange={searchInputChangeHandler}
+        />    
     </Card>
     <Card className={classes.filters}>
-      <h1>oi</h1>
+      <label htmlFor="requerente">Requerente:</label>
+      <select onChange={selectedChangeHandler} id="requerente" name="requerentes">
+        <option defaultValue={true} value="Todos">Todos</option>
+        <option value="4CTA">4CTA</option>
+        <option value="CMA">CMA</option>
+        <option value="3BIS">3BIS</option>
+      </select>
     </Card>
     </div>
   );
