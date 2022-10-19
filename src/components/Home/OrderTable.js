@@ -150,9 +150,14 @@ const OrderTable = (props) => {
   );
 
   const filters = (
+    <div className={classes.search_and_filters}>
     <Card className={classes.search}>
       {searchInput}
     </Card>
+    <Card className={classes.filters}>
+      <h1>oi</h1>
+    </Card>
+    </div>
   );
 
   return (

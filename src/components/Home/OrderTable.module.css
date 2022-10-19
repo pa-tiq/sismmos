@@ -1,5 +1,24 @@
+.search_and_filters{
+  display: flex;
+}
+
+.filters{
+  float: left;
+  margin-left:1%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+
 .search{
-  padding:1rem;
+  float:left;
+  padding-left:0.8rem;
+  padding-right:0.8rem;
+  padding-top:0.2rem;
+  padding-bottom:0.2rem;
   max-width: 20rem;
 }
 
@@ -12,6 +31,10 @@
   border: 2px solid rgb(245, 238, 238);
   margin: 0;
   margin-top: 1rem ;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
   max-width: inherit;
   font-size: large;
 }
