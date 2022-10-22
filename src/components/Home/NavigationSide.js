@@ -15,7 +15,7 @@ const NavigationSide = (props) => {
           <a id={props.views[0]} onClick={viewChangeHandler}>Home</a>
         </li>
         <li>
-          <a id={props.views[1]} onClick={viewChangeHandler}>Dashboard</a>
+          <a id={props.views[1]} onClick={viewChangeHandler}>Ordens de Serviço</a>
         </li>
       </ul>
     </Card>
