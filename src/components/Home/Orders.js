@@ -37,7 +37,7 @@ const DUMMY_DATA = [
   ],
 ];
 
-const Orders = (props) => {
+const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
   const [preSearchData, setPreSearchData] = useState(null);
@@ -56,7 +56,7 @@ const Orders = (props) => {
       const loadedOrders = [];
       for (const orderKey in newOrders) {
         loadedOrders.push({
-          id: index,
+          id: `${index}`,
           status: newOrders[orderKey].status,
           material: newOrders[orderKey].material,
           ultima_atualizacao: newOrders[orderKey].ultima_atualizacao,
@@ -72,7 +72,7 @@ const Orders = (props) => {
   }, [fetchOrders]);
 
   useEffect(() => {
-    if(!searchActive) setVisibleData(orders);
+    setVisibleData(orders);
   },[orders]);
 
   const searchInputChangeHandler = (e) => {
@@ -86,7 +86,7 @@ const Orders = (props) => {
     const needle = searchText.toLowerCase();
     let searchData = [];
     orders.forEach((row) => {
-      const needleFoundInRow = row.find((element) => {
+      const needleFoundInRow = Object.values(row).find((element) => {
         if (element.toLowerCase().includes(needle)) return true;
       });
       if (needleFoundInRow) {

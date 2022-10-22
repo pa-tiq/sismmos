@@ -10,6 +10,9 @@
 
 .title{
   align-self: center;
+  text-emphasis-color: white;
+  outline: white;
+  color: white;
 }
 
 .add{
@@ -30,6 +33,7 @@
   width: 100%;
   text-align: justify;
   vertical-align: middle;
+  color: white;
 }
 
 .search{
@@ -44,5 +48,6 @@
 .searchInput{
   margin-left: 1rem;
   margin-right: 1rem;
+  color:white;
 }
 

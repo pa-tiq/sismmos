@@ -18,9 +18,11 @@
   width: 100%;
   text-align: center;
   vertical-align: middle;
+  background-color: rgb(20, 20, 20);
 }
 
 .homepage {
+  background-color: #464546;
   display: flex;
   margin-top: -1rem;
   margin-left: 1rem;

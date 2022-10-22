@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect, useCallback } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import classes from "./OrdersTable.module.css";
 
 const HEADERS = [
@@ -23,14 +23,11 @@ const OrdersTable = (props) => {
     setOrders(props.orders);
   }, [props.orders]);
 
-  let ordersTable = <h2>Nenhuma ordem de serviço encontrada.</h2>;
-
   const sort = (e) => {
     const columnId = e.target.cellIndex;
     const column = e.target.id;
     const descending = sorting.column === columnId && !sorting.descending;
     const dataCopy = [...orders];
-    console.log(column);
     dataCopy.sort((a, b) => {
       if (a[column] === b[column]) return 0;
       return descending
@@ -44,6 +41,8 @@ const OrdersTable = (props) => {
     setOrders(dataCopy);
     setSorting({ column:columnId, descending });
   };
+
+  let ordersTable = <h2 className={classes.message}>Nenhuma ordem de serviço encontrada.</h2>;
 
   if (orders.length > 0) {
     ordersTable = (
@@ -101,7 +100,7 @@ const OrdersTable = (props) => {
   }
 
   if (props.loading) {
-    content = <h2>Carregando ordens de serviço...</h2>;
+    content = <h2 className={classes.message}>Carregando ordens de serviço...</h2>;
   }
 
   return <Fragment>{content}</Fragment>;
