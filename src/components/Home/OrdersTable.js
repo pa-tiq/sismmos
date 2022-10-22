@@ -1,7 +1,7 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect, useCallback } from "react";
 import classes from './OrdersTable.module.css';
 
-const DUMMY_HEADERS = [
+const HEADERS = [
   "ID",
   "Material",
   "Última Atualização",
@@ -13,7 +13,19 @@ const DUMMY_HEADERS = [
 
 const OrdersTable = (props) => {
 
-  const [orders, setOrders] = useState(props.orders);
+  //const ConvertObjectArrayToArrayArray = useCallback((objarr) => {
+  //  let arrarr = [];
+  //  objarr.map((obj,idx)=>{
+  //    for(const [_,value] of Object.entries(obj)){
+  //      if(!arrarr[idx]) arrarr[idx] = [];
+  //      arrarr[idx].push(value);
+  //    }
+  //  });
+  //  console.log(arrarr);
+  //  return(arrarr);  
+  //},[]);
+
+  const [orders, setOrders] = useState([]);
   const [sorting, setSorting] = useState({
     column: null,
     descending: false,
@@ -44,18 +56,12 @@ const OrdersTable = (props) => {
   };
 
   if (orders.length > 0) {
-
-    for(const [key,value] of Object.entries(props.orders)){
-      <td className={classes.td} key={key}>
-        {value}
-      </td>
-    }
-
+    
     ordersTable = (
       <table className={classes.table}>
         <thead onClick={sort}>
           <tr>
-            {DUMMY_HEADERS.map((title, idx) => {
+            {HEADERS.map((title, idx) => {
               if (sorting.column === idx) {
                 title += sorting.descending ? " \u2191" : " \u2193";
               }
@@ -70,13 +76,13 @@ const OrdersTable = (props) => {
         <tbody className={classes.tbody}>
           {orders.map((row, idx) => (
             <tr className={classes.tr} key={idx}>
-              <td className={classes.td}>{row.idx}</td>
-              <td className={classes.td}>{row.material}</td>
-              <td className={classes.td}>{row.ultima_atualizacao}</td>
-              <td className={classes.td}>{row.requerente}</td>
-              <td className={classes.td}>{row.status}</td>
-              <td className={classes.td}>{row.prioridade}</td>
-              <td className={classes.td}>{row.tipo}</td>
+              <td className={classes.td} id={'id'}>{idx}</td>
+              <td className={classes.td} id={'material'}>{row.material}</td>
+              <td className={classes.td} id={'ultima_atualizacao'}>{row.ultima_atualizacao}</td>
+              <td className={classes.td} id={'requerente'}>{row.requerente}</td>
+              <td className={classes.td} id={'status'}>{row.status}</td>
+              <td className={classes.td} id={'prioridade'}>{row.prioridade}</td>
+              <td className={classes.td} id={'tipo'}>{row.tipo}</td>
             </tr>
           ))}
         </tbody>
