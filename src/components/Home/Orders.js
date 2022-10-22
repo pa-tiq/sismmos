@@ -52,17 +52,19 @@ const Orders = (props) => {
       url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
     };
     const updateOrders = (newOrders) => {
+      let index = 1;
       const loadedOrders = [];
       for (const orderKey in newOrders) {
         loadedOrders.push({
-          id: orderKey,
+          id: index,
           status: newOrders[orderKey].status,
           material: newOrders[orderKey].material,
           ultima_atualizacao: newOrders[orderKey].ultima_atualizacao,
           requerente: newOrders[orderKey].requerente,
           prioridade: newOrders[orderKey].prioridade,
-          prtipooridade: newOrders[orderKey].tipo,
+          tipo: newOrders[orderKey].tipo,
         });
+        index++;
       }
       setOrders(loadedOrders);
     };

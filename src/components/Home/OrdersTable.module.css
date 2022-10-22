@@ -28,7 +28,8 @@
 .td {
   border-top: 2px solid rgb(239, 233, 233);
   cursor: auto;
-  padding: 5px;
+  padding-right: 25px;
+  padding-left: 25px;
   width: fit-content;
   max-width: inherit;
 }
