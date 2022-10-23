@@ -83,12 +83,7 @@ const Orders = () => {
   const hideAddOrderHandler = () => {
     setAddNewOrder(false);
   }
-
-  const orderAddHandler = (order) => {
-    orderContext.addOrder(order)
-    setAddNewOrder(false);
-  };
-
+  
   const filters = (
     <div className={classes.search_and_filters}>
       <Card className={classes.search}>
@@ -135,7 +130,7 @@ const Orders = () => {
           onFetch={orderContext.fetchOrders}
         />
       </Card>
-      {addNewOrder && <NewOrder onHide={hideAddOrderHandler} onAddOrder={orderAddHandler} />}
+      {addNewOrder && <NewOrder onHide={hideAddOrderHandler} />}
     </Fragment>
   );
 };

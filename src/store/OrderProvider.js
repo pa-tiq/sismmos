@@ -4,7 +4,6 @@ import OrderContext from "./order-context";
 
 const OrderProvider = (props) => {
   const httpObj = useHttp();
-  const { sendRequest: fetchOrdersFromBackend } = httpObj;
   const [orders, setOrders] = useState([]);
   const [orderID, setOrderID] = useState(1);
 
@@ -13,6 +12,7 @@ const OrderProvider = (props) => {
     setOrders((prevData) => prevData.concat(order));
     setOrderID((prevData) => prevData + 1);
   };
+
   const removeOrderHandler = (id) => {
     const updatedItems = orders.filter((item) => {
       return item.id !== id;
@@ -20,6 +20,7 @@ const OrderProvider = (props) => {
     setOrders(updatedItems);
     setOrderID((prevData) => prevData - 1);
   };
+
   const fetchOrdersHandler = () => {
     const requestConfig = {
       url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
@@ -42,8 +43,33 @@ const OrderProvider = (props) => {
       setOrderID(index);
       setOrders(loadedOrders);
     };
-    fetchOrdersFromBackend(requestConfig, updateOrders);
+    httpObj.sendRequest(requestConfig, updateOrders);
   };
+
+  const postOrderHandler = async(order) => {
+    const postConfig = {
+      url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
+      method: "POST",
+      body: order,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const createTask = (orderData) => {
+      const generatedId = orderData.name; //firebase-specific: "name" contains generated id
+      const loadedOrder = {
+        id:generatedId,
+        status:order.status,
+        ultima_atualizacao:order.ultima_atualizacao,
+        material:order.material,
+        requerente:order.requerente,
+        prioridade:order.prioridade,
+        tipo:order.tipo
+      }
+      addOrderHandler(loadedOrder);
+    };
+    httpObj.sendRequest(postConfig, createTask);
+  }
 
   useEffect(() => {
     fetchOrdersHandler();
@@ -56,7 +82,7 @@ const OrderProvider = (props) => {
         orderID: orderID,
         isLoading: httpObj.isLoading,
         error: httpObj.error,
-        addOrder: addOrderHandler,
+        addOrder: postOrderHandler,
         removeOrder: removeOrderHandler,
         fetchOrders: fetchOrdersHandler,
       }}
