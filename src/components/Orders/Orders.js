@@ -4,7 +4,6 @@ import Card from "../UI/Card/Card";
 import Input from "../UI/Input/Input";
 import Button from "../UI/Button/Button";
 import NewOrder from "./NewOrder";
-import useHttp from "../../hooks/use-http";
 import OrdersTable from "./OrdersTable";
 import OrderContext from "../../store/order-context";
 
@@ -43,9 +42,6 @@ const Orders = () => {
   const [preSearchData, setPreSearchData] = useState(null);
   const [visibleData, setVisibleData] = useState([]);
   const [addNewOrder, setAddNewOrder] = useState(false);
-
-  const httpObj = useHttp();
-  const { sendRequest: fetchOrders } = httpObj;
 
   const orderContext = useContext(OrderContext);
   const { orders:orders } = orderContext;
@@ -86,8 +82,6 @@ const Orders = () => {
 
   const orderAddHandler = (order) => {
     orderContext.addOrder(order)
-    //order.idx = `${orderID}`;
-    //setOrders((prevData) => prevData.concat(order));
     setAddNewOrder(false);
   };
 
@@ -132,9 +126,9 @@ const Orders = () => {
       <Card className={classes.table_card}>
         <OrdersTable
           orders={visibleData}
-          loading={httpObj.isLoading}
-          error={httpObj.error}
-          onFetch={fetchOrders}
+          loading={orderContext.isLoading}
+          error={orderContext.error}
+          onFetch={orderContext.fetchOrders}
         />
       </Card>
       <Card>{addNewOrder && <NewOrder onAddOrder={orderAddHandler} />}</Card>

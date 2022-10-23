@@ -3,7 +3,6 @@ import useHttp from "../hooks/use-http";
 import OrderContext from "./order-context";
 
 const OrderProvider = (props) => {
-
   const httpObj = useHttp();
   const { sendRequest: fetchOrdersFromBackend } = httpObj;
   const [orders, setOrders] = useState([]);
@@ -12,14 +11,14 @@ const OrderProvider = (props) => {
   const addOrderHandler = (order) => {
     order.idx = `${orderID}`;
     setOrders((prevData) => prevData.concat(order));
-    setOrderID((prevData) => prevData+1);
+    setOrderID((prevData) => prevData + 1);
   };
   const removeOrderHandler = (id) => {
     const updatedItems = orders.filter((item) => {
       return item.id !== id;
     });
     setOrders(updatedItems);
-    setOrderID((prevData) => prevData-1)
+    setOrderID((prevData) => prevData - 1);
   };
   const fetchOrdersHandler = () => {
     const requestConfig = {
@@ -38,10 +37,10 @@ const OrderProvider = (props) => {
           prioridade: newOrders[orderKey].prioridade,
           tipo: newOrders[orderKey].tipo,
         });
-        index++;       
+        index++;
       }
       setOrderID(index);
-      setOrders(loadedOrders);    
+      setOrders(loadedOrders);
     };
     fetchOrdersFromBackend(requestConfig, updateOrders);
   };
@@ -49,15 +48,17 @@ const OrderProvider = (props) => {
   useEffect(() => {
     fetchOrdersHandler();
   }, []); //this only runs once - when the app starts
- 
+
   return (
     <OrderContext.Provider
       value={{
         orders: orders,
         orderID: orderID,
+        isLoading: httpObj.isLoading,
+        error: httpObj.error,
         addOrder: addOrderHandler,
         removeOrder: removeOrderHandler,
-        fetchOrders: fetchOrdersHandler
+        fetchOrders: fetchOrdersHandler,
       }}
     >
       {props.children}
@@ -65,6 +66,4 @@ const OrderProvider = (props) => {
   );
 };
 
-export default OrderProvider
-
-
+export default OrderProvider;
