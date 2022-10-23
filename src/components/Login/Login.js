@@ -10,7 +10,7 @@ import Button from "../UI/Button/Button";
 import Input from "../UI/Input/Input";
 import AuthContext from "../../store/auth-context";
 
-const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const emailReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
