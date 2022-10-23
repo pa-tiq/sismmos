@@ -57,7 +57,7 @@ const Orders = () => {
       let index = 1;
       for (const orderKey in newOrders) {
         loadedOrders.push({
-          id: `${index}`,
+          idx: `${index}`,
           status: newOrders[orderKey].status,
           material: newOrders[orderKey].material,
           ultima_atualizacao: newOrders[orderKey].ultima_atualizacao,
@@ -108,7 +108,7 @@ const Orders = () => {
   };
 
   const orderAddHandler = (order) => {
-    order.id = `${orderID}`;
+    order.idx = `${orderID}`;
     setOrders((prevData) => prevData.concat(order));
     setAddNewOrder(false);
   };

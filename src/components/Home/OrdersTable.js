@@ -66,7 +66,7 @@ const OrdersTable = (props) => {
           {orders.map((row, idx) => (
             <tr className={classes.table_row} key={idx}>
               <td className={classes.table_data} id={"id"}>
-                {row.id}
+                {row.idx}
               </td>
               <td className={classes.table_data} id={"material"}>
                 {row.material}
