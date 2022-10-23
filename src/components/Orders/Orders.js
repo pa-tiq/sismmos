@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useContext } from "react";
 import classes from "./Orders.module.css";
 import Card from "../UI/Card/Card";
 import Input from "../UI/Input/Input";
@@ -6,6 +6,7 @@ import Button from "../UI/Button/Button";
 import NewOrder from "./NewOrder";
 import useHttp from "../../hooks/use-http";
 import OrdersTable from "./OrdersTable";
+import OrderContext from "../../store/order-context";
 
 const DUMMY_DATA = [
   [
@@ -38,8 +39,6 @@ const DUMMY_DATA = [
 ];
 
 const Orders = () => {
-  const [orders, setOrders] = useState([]);
-  const [orderID, setOrderID] = useState(1);
   const [searchActive, setSearchActive] = useState(false);
   const [preSearchData, setPreSearchData] = useState(null);
   const [visibleData, setVisibleData] = useState([]);
@@ -48,30 +47,8 @@ const Orders = () => {
   const httpObj = useHttp();
   const { sendRequest: fetchOrders } = httpObj;
 
-  useEffect(() => {
-    const requestConfig = {
-      url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
-    };
-    const updateOrders = (newOrders) => {
-      const loadedOrders = [];
-      let index = 1;
-      for (const orderKey in newOrders) {
-        loadedOrders.push({
-          idx: `${index}`,
-          status: newOrders[orderKey].status,
-          material: newOrders[orderKey].material,
-          ultima_atualizacao: newOrders[orderKey].ultima_atualizacao,
-          requerente: newOrders[orderKey].requerente,
-          prioridade: newOrders[orderKey].prioridade,
-          tipo: newOrders[orderKey].tipo,
-        });
-        index++;       
-      }
-      setOrderID(index);
-      setOrders(loadedOrders);
-    };
-    fetchOrders(requestConfig, updateOrders);
-  }, [fetchOrders]);
+  const orderContext = useContext(OrderContext);
+  const { orders:orders } = orderContext;
 
   useEffect(() => {
     setVisibleData(orders);
@@ -108,8 +85,9 @@ const Orders = () => {
   };
 
   const orderAddHandler = (order) => {
-    order.idx = `${orderID}`;
-    setOrders((prevData) => prevData.concat(order));
+    orderContext.addOrder(order)
+    //order.idx = `${orderID}`;
+    //setOrders((prevData) => prevData.concat(order));
     setAddNewOrder(false);
   };
 
