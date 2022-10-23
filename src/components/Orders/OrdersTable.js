@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import classes from "./OrdersTable.module.css";
 
 const HEADERS = [
-  ["ID","id"],
+  ["ID","idx"],
   ["Material","material"],
   ["Última Atualização","ultima_atualizacao"],
   ["Requerente","requerente"],

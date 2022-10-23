@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import Card from "../UI/Card/Card";
 import classes from "./Home.module.css";
 import NavigationSide from "./NavigationSide";
-import Orders from "./Orders";
+import Orders from "../Orders/Orders";
+import Dashboard from "../Dashboard/Dashbard";
 
 const Home = () => {
 
-  const views = [ "home", "ordens" ];
+  const views = [ "dashboard", "ordens" ];
   const [activeView, setActiveView] = useState(views[0]);
   const changeViewHandler = (selectedView) => {
     setActiveView(selectedView);
@@ -18,7 +19,7 @@ const Home = () => {
         <NavigationSide views={views} onChangeView={changeViewHandler}/>
       </div>
       <Card className={classes.home}>
-        {activeView === views[0] && <h1>Welcome back!</h1>}
+        {activeView === views[0] && <Dashboard/>}
         {activeView === views[1] && <Orders/>}
       </Card>
     </section>
