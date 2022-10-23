@@ -39,6 +39,7 @@ const DUMMY_DATA = [
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [orderID, setOrderID] = useState(1);
   const [searchActive, setSearchActive] = useState(false);
   const [preSearchData, setPreSearchData] = useState(null);
   const [visibleData, setVisibleData] = useState([]);
@@ -52,8 +53,8 @@ const Orders = () => {
       url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
     };
     const updateOrders = (newOrders) => {
-      let index = 1;
       const loadedOrders = [];
+      let index = 1;
       for (const orderKey in newOrders) {
         loadedOrders.push({
           id: `${index}`,
@@ -64,8 +65,9 @@ const Orders = () => {
           prioridade: newOrders[orderKey].prioridade,
           tipo: newOrders[orderKey].tipo,
         });
-        index++;
+        index++;       
       }
+      setOrderID(index);
       setOrders(loadedOrders);
     };
     fetchOrders(requestConfig, updateOrders);
@@ -73,7 +75,7 @@ const Orders = () => {
 
   useEffect(() => {
     setVisibleData(orders);
-  },[orders]);
+  }, [orders]);
 
   const searchInputChangeHandler = (e) => {
     const searchText = e.target.value;
@@ -106,7 +108,9 @@ const Orders = () => {
   };
 
   const orderAddHandler = (order) => {
+    order.id = `${orderID}`;
     setOrders((prevData) => prevData.concat(order));
+    setAddNewOrder(false);
   };
 
   const filters = (

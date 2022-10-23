@@ -58,7 +58,7 @@ const NewOrderForm = (props) => {
         <label htmlFor="tipo">Tipo</label>
         <input type="text" id="tipo" ref={tipoRef} />
       </div>
-      <Button className={classes.add}>{props.loading ? "Enviando..." : "Adicionar Ordem"}</Button>
+      <button onClick={submitHandler} className={classes.add}>{props.loading ? "Enviando..." : "Adicionar Ordem"}</button>
     </form>
   );
 };

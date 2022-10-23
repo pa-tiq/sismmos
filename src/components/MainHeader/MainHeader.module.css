@@ -9,6 +9,7 @@
   align-items: center;
   background: #dddddd;
   padding: 0 2rem;
+  z-index: 1; /*tive que colocar isso para o header ficar na frente do NavigationSide*/
 }
 
 .main-header h1 {
