@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import classes from "./NewOrderForm.module.css";
+import Button from "../UI/Button/Button";
 
 const NewOrderForm = (props) => {
   const materialRef = useRef('');
@@ -40,7 +41,7 @@ const NewOrderForm = (props) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form className={classes.form_card} onSubmit={submitHandler}>
       <div className={classes.control}>
         <label htmlFor="material">Material</label>
         <input type="text" id="material" ref={materialRef} />
@@ -57,7 +58,7 @@ const NewOrderForm = (props) => {
         <label htmlFor="tipo">Tipo</label>
         <input type="text" id="tipo" ref={tipoRef} />
       </div>
-      <button>{props.loading ? "Enviando..." : "Adicionar Ordem"}</button>
+      <Button className={classes.add}>{props.loading ? "Enviando..." : "Adicionar Ordem"}</Button>
     </form>
   );
 };

@@ -8,6 +8,11 @@
   align-items: center;
 }
 
+.table_card{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .title{
   align-self: center;
   text-emphasis-color: white;

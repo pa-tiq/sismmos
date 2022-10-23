@@ -3,18 +3,19 @@
 }
 
 .table {
+  display: inline-table;
   margin: 0;
-  margin-top: 1rem ;
+  margin-top: 0.5rem;
   padding-top: 0.5rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-bottom: 0.5rem;
   max-width: inherit;
-  font-size: large;
+  font-size: large;  
   color: white;
 }
 
-.th {
+.table_header {
   cursor: pointer;
   padding-left: 10px;
   padding-right: 10px;
@@ -22,15 +23,15 @@
   max-width: inherit;
 }
 
-.tbody{
+.table_body{
   max-width: inherit;
 }
 
-.tr{
+.table_row{
   max-width: inherit;
 }
 
-.td {
+.table_data {
   border-top: 2px solid rgb(239, 233, 233);
   cursor: auto;
   padding-right: 25px;

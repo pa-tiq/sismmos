@@ -147,7 +147,7 @@ const Orders = () => {
         </Button>
       </div>
       {filters}
-      <Card>
+      <Card className={classes.table_card}>
         <OrdersTable
           orders={visibleData}
           loading={httpObj.isLoading}

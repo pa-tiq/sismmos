@@ -48,42 +48,42 @@ const OrdersTable = (props) => {
     ordersTable = (
       <table className={classes.table}>
         <thead onClick={sort}>
-          <tr>
+          <tr className={classes.table_row} >
             {HEADERS.map((title, idx) => {
               let header = title[0];
               if (sorting.column === idx) {
                 header = title[0] + (sorting.descending ? " \u2191" : " \u2193");
               }
               return (
-                <th className={classes.th} key={idx} id={title[1]}>
+                <th className={classes.table_header} key={idx} id={title[1]}>
                   {header}
                 </th>
               );
             })}
           </tr>
         </thead>
-        <tbody className={classes.tbody}>
+        <tbody className={classes.table_body}>
           {orders.map((row, idx) => (
-            <tr className={classes.tr} key={idx}>
-              <td className={classes.td} id={"id"}>
+            <tr className={classes.table_row} key={idx}>
+              <td className={classes.table_data} id={"id"}>
                 {row.id}
               </td>
-              <td className={classes.td} id={"material"}>
+              <td className={classes.table_data} id={"material"}>
                 {row.material}
               </td>
-              <td className={classes.td} id={"ultima_atualizacao"}>
+              <td className={classes.table_data} id={"ultima_atualizacao"}>
                 {row.ultima_atualizacao}
               </td>
-              <td className={classes.td} id={"requerente"}>
+              <td className={classes.table_data} id={"requerente"}>
                 {row.requerente}
               </td>
-              <td className={classes.td} id={"status"}>
+              <td className={classes.table_data} id={"status"}>
                 {row.status}
               </td>
-              <td className={classes.td} id={"prioridade"}>
+              <td className={classes.table_data} id={"prioridade"}>
                 {row.prioridade}
               </td>
-              <td className={classes.td} id={"tipo"}>
+              <td className={classes.table_data} id={"tipo"}>
                 {row.tipo}
               </td>
             </tr>

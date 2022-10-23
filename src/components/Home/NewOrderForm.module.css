@@ -2,6 +2,12 @@
   margin: 1rem 0;
 }
 
+.form_card{
+  padding: 0.5rem;
+  padding-bottom: 1.5rem;
+
+}
+
 .control label {
   display: block;
   font-weight: bold;
@@ -30,4 +36,15 @@
 .control textarea:focus {
   outline: none;
   border-color: #230052;
+}
+
+.add{
+  font: inherit;
+  background: #dd0db0;
+  border: 1px solid #dd0db0;
+  padding: 0.5rem 1.5rem;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+  border-radius: 20px;
 }
