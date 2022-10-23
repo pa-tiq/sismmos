@@ -7,12 +7,6 @@ const OrderProvider = (props) => {
   const [orders, setOrders] = useState([]);
   const [orderID, setOrderID] = useState(1);
 
-  const addOrderHandler = (order) => {
-    order.idx = `${orderID}`;
-    setOrders((prevData) => prevData.concat(order));
-    setOrderID((prevData) => prevData + 1);
-  };
-
   const removeOrderHandler = (id) => {
     const updatedItems = orders.filter((item) => {
       return item.id !== id;
@@ -70,6 +64,12 @@ const OrderProvider = (props) => {
     };
     httpObj.sendRequest(postConfig, createTask);
   }
+
+  const addOrderHandler = (order) => {
+    order.idx = `${orderID}`;
+    setOrders((prevData) => prevData.concat(order));
+    setOrderID((prevData) => prevData + 1);
+  };
 
   useEffect(() => {
     fetchOrdersHandler();

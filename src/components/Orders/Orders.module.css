@@ -1,16 +1,7 @@
-.search_and_filters{
-  display: flex;
-}
-
 .header{
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.table_card{
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 
 .title{
@@ -29,6 +20,10 @@
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
   border-radius: 20px;
+}
+
+.search_and_filters{
+  display: flex;
 }
 
 .filters{
@@ -54,5 +49,10 @@
   margin-left: 1rem;
   margin-right: 1rem;
   color:white;
+}
+
+.table_card{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
