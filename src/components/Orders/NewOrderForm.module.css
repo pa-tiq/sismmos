@@ -1,11 +1,9 @@
 .control {
-  margin: 1rem 0;
+  margin: 0;
 }
 
 .form_card{
-  padding: 0.5rem;
   padding-bottom: 1.5rem;
-
 }
 
 .control label {
@@ -38,7 +36,10 @@
   border-color: #230052;
 }
 
-.add{
+.button_add{
+  margin-top:1.5rem;
+  margin-right:1rem;
+  float:right;
   font: inherit;
   background: #dd0db0;
   border: 1px solid #dd0db0;

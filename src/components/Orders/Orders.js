@@ -80,6 +80,10 @@ const Orders = () => {
     else setAddNewOrder(true);
   };
 
+  const hideAddOrderHandler = () => {
+    setAddNewOrder(false);
+  }
+
   const orderAddHandler = (order) => {
     orderContext.addOrder(order)
     setAddNewOrder(false);
@@ -118,7 +122,7 @@ const Orders = () => {
     <Fragment>
       <div className={classes.header}>
         <h1 className={classes.title}>Ordens de Serviço</h1>
-        <Button className={classes.add} onClick={showAddOrderHandler}>
+        <Button className={classes.button_add} onClick={showAddOrderHandler}>
           Adicionar
         </Button>
       </div>
@@ -131,7 +135,7 @@ const Orders = () => {
           onFetch={orderContext.fetchOrders}
         />
       </Card>
-      <Card>{addNewOrder && <NewOrder onAddOrder={orderAddHandler} />}</Card>
+      {addNewOrder && <NewOrder onHide={hideAddOrderHandler} onAddOrder={orderAddHandler} />}
     </Fragment>
   );
 };

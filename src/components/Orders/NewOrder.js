@@ -1,6 +1,7 @@
 import React, {Fragment} from "react";
 import useHttp from "../../hooks/use-http";
 import NewOrderForm from "./NewOrderForm";
+import Modal from "../UI/Modal/Modal";
 
 const NewOrder = (props) => {
   const httpObj = useHttp();
@@ -31,10 +32,10 @@ const NewOrder = (props) => {
   }
 
   return (
-    <Fragment>
+    <Modal onHide={props.onHide}>
       <NewOrderForm onEnterOrder={enterOrderHandler} loading={httpObj.isLoading} />
       {httpObj.error && <p>{httpObj.error}</p>}
-    </Fragment>
+    </Modal>
   );
 };
 

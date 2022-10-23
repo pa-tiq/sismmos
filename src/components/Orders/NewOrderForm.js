@@ -3,14 +3,14 @@ import classes from "./NewOrderForm.module.css";
 import Button from "../UI/Button/Button";
 
 const NewOrderForm = (props) => {
-  const materialRef = useRef('');
-  const requerenteRef = useRef('');
-  const prioridadeRef = useRef('');
-  const tipoRef = useRef('');
+  const materialRef = useRef("");
+  const requerenteRef = useRef("");
+  const prioridadeRef = useRef("");
+  const tipoRef = useRef("");
 
   const submitHandler = (event) => {
     event.preventDefault();
-    
+
     const enteredMaterial = materialRef.current.value;
     const enteredRequerente = requerenteRef.current.value;
     const enteredPrioridade = prioridadeRef.current.value;
@@ -29,13 +29,13 @@ const NewOrderForm = (props) => {
       enteredTipo.trim().length > 0
     ) {
       const order = {
-        status:'Novo',
-        ultima_atualizacao:currentDate,
-        material:enteredMaterial,
-        requerente:enteredRequerente,
-        prioridade:enteredPrioridade,
-        tipo:enteredTipo
-      }
+        status: "Novo",
+        ultima_atualizacao: currentDate,
+        material: enteredMaterial,
+        requerente: enteredRequerente,
+        prioridade: enteredPrioridade,
+        tipo: enteredTipo,
+      };
       props.onEnterOrder(order);
     }
   };
@@ -58,7 +58,9 @@ const NewOrderForm = (props) => {
         <label htmlFor="tipo">Tipo</label>
         <input type="text" id="tipo" ref={tipoRef} />
       </div>
-      <button onClick={submitHandler} className={classes.add}>{props.loading ? "Enviando..." : "Adicionar Ordem"}</button>
+      <Button onClick={submitHandler} className={classes.button_add}>
+        {props.loading ? "Enviando..." : "Adicionar Ordem"}
+      </Button>
     </form>
   );
 };
