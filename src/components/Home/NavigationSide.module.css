@@ -1,6 +1,6 @@
 .nav {
   width: 100%;
-  background: #dddddd;
+  background: rgb(30, 30, 30);
   animation: nav-appear 1s ease-out forwards;
   padding: 1rem;
 }
