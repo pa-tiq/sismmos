@@ -23,6 +23,14 @@
   max-width: inherit;
 }
 
+.table_header_actions {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  max-width: inherit;
+  color: #dd0db0;
+}
+
 .table_body{
   max-width: inherit;
 }

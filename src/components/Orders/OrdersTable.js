@@ -3,18 +3,16 @@ import classes from "./OrdersTable.module.css";
 import OrderItem from "./OrderItem";
 
 const HEADERS = [
-  ["ID","idx"],
-  ["Material","material"],
-  ["Requerente","requerente"],
-  ["Status","status"],
-  ["Prioridade","prioridade"],
-  ["Tipo","tipo"],
-  ["Última Atualização","ultima_atualizacao"],
-
+  ["ID", "idx"],
+  ["Material", "material"],
+  ["Requerente", "requerente"],
+  ["Status", "status"],
+  ["Prioridade", "prioridade"],
+  ["Tipo", "tipo"],
+  ["Última Atualização", "ultima_atualizacao"],
 ];
 
 const OrdersTable = (props) => {
-
   const [orders, setOrders] = useState([]);
   const [sorting, setSorting] = useState({
     column: null,
@@ -37,40 +35,58 @@ const OrdersTable = (props) => {
           ? 1
           : -1
         : a[column] > b[column]
-          ? 1
-          : -1;
+        ? 1
+        : -1;
     });
     setOrders(dataCopy);
-    setSorting({ column:columnId, descending });
+    setSorting({ column: columnId, descending });
   };
 
-  let ordersTable = <h2 className={classes.message}>Nenhuma ordem de serviço encontrada.</h2>;
+  let ordersTable = (
+    <h2 className={classes.message}>Nenhuma ordem de serviço encontrada.</h2>
+  );
 
   if (orders.length > 0) {
     ordersTable = (
-      <table className={classes.table} key={'table_orders'}>
-        <thead onClick={sort} key={'table_headers'}>
-          <tr className={classes.table_row} key={'headers_row'}>
+      <table className={classes.table} key={"table_orders"} id={"table_orders"}>
+        <thead onClick={sort} key={"table_headers"} id={"table_headers"}>
+          <tr
+            className={classes.table_row}
+            key={"headers_row"}
+            id={"headers_row"}
+          >
             {HEADERS.map((title, index) => {
               let header = title[0];
               if (sorting.column === index) {
-                header = title[0] + (sorting.descending ? " \u2191" : " \u2193");
-                console.log(`header_${index}_${title[1]}`);
+                header =
+                  title[0] + (sorting.descending ? " \u2191" : " \u2193");
               }
               return (
-                <th className={classes.table_header} key={`header_${index}_${title[1]}`} id={title[1]}>
+                <th
+                  className={classes.table_header}
+                  key={`header_${index}_${title[1]}`}
+                  id={`header_${index}_${title[1]}`}
+                >
                   {header}
                 </th>
               );
             })}
+            <th
+              className={classes.table_header_actions}
+              key={"edit_remove"}
+              id={"edit_remove"}
+            >
+              Ações
+            </th>
           </tr>
         </thead>
-        <tbody className={classes.table_body} key={'table_body'}>
-          {orders.map((row) => (            
-            <OrderItem
-              order={row}
-              onHide={props.onHide}
-            />
+        <tbody
+          className={classes.table_body}
+          key={"table_body"}
+          id={"table_body"}
+        >
+          {orders.map((row) => (
+            <OrderItem order={row} onHide={props.onHide} key={row.id} id={row.id}/>
           ))}
         </tbody>
       </table>
@@ -84,7 +100,9 @@ const OrdersTable = (props) => {
   }
 
   if (props.loading) {
-    content = <h2 className={classes.message}>Carregando ordens de serviço...</h2>;
+    content = (
+      <h2 className={classes.message}>Carregando ordens de serviço...</h2>
+    );
   }
 
   return <Fragment>{content}</Fragment>;

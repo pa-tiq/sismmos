@@ -12,7 +12,7 @@ const EditOrder = (props) => {
   }
 
   return (
-    <Modal onHide={props.onHide}>
+    <Modal onHide={props.onHide} key={'EditModal'}>
       <EditOrderForm order={props.order} onEditOrder={editOrderHandler} loading={orderContext.isLoading} />
       {orderContext.error && <p>{orderContext.error}</p>}
     </Modal>

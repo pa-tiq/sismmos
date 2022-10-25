@@ -12,7 +12,7 @@ const NewOrder = (props) => {
   }
 
   return (
-    <Modal onHide={props.onHide}>
+    <Modal onHide={props.onHide} key={'AddModal'}>
       <NewOrderForm onEnterOrder={enterOrderHandler} loading={orderContext.isLoading} />
       {orderContext.error && <p>{orderContext.error}</p>}
     </Modal>

@@ -85,8 +85,8 @@ const Orders = () => {
   }
   
   const filters = (
-    <div className={classes.search_and_filters}>
-      <Card className={classes.search}>
+    <div className={classes.search_and_filters} key={'search_filters'} id={'search_filters'}>
+      <Card className={classes.search} key={'search'} id={'search'}>
         <Input
           className={classes.searchInput}
           label="Pesquisa"
@@ -95,7 +95,7 @@ const Orders = () => {
           onChange={searchInputChangeHandler}
         />
       </Card>
-      <Card className={classes.filters}>
+      <Card className={classes.filters} key={'filters'} id={'filters'}>
         <label htmlFor="requerente">Requerente: </label>
         <select
           onChange={selectedChangeHandler}
@@ -122,7 +122,7 @@ const Orders = () => {
         </Button>
       </div>
       {filters}
-      <Card className={classes.table_card}>
+      <Card className={classes.table_card} key={'order_table_card'} id={'order_table_card'}>
         <OrdersTable
           orders={visibleData}
           loading={orderContext.isLoading}
