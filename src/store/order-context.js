@@ -7,6 +7,7 @@ const OrderContext = React.createContext({
   error: null,
   addOrder: (order) => {},
   removeOrder: (orderId) => {},
+  updateOrder: (order) => {},
   fetchOrders: () => {},
 });
 

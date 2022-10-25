@@ -128,6 +128,7 @@ const Orders = () => {
           loading={orderContext.isLoading}
           error={orderContext.error}
           onFetch={orderContext.fetchOrders}
+          onHide={hideAddOrderHandler}
         />
       </Card>
       {addNewOrder && <NewOrder onHide={hideAddOrderHandler} />}

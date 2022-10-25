@@ -5,11 +5,12 @@ import OrderItem from "./OrderItem";
 const HEADERS = [
   ["ID","idx"],
   ["Material","material"],
-  ["Última Atualização","ultima_atualizacao"],
   ["Requerente","requerente"],
   ["Status","status"],
   ["Prioridade","prioridade"],
-  ["Tipo","tipo"]
+  ["Tipo","tipo"],
+  ["Última Atualização","ultima_atualizacao"],
+
 ];
 
 const OrdersTable = (props) => {
@@ -67,14 +68,8 @@ const OrdersTable = (props) => {
         <tbody className={classes.table_body} key={'table_body'}>
           {orders.map((row) => (            
             <OrderItem
-              id={row.id}
-              idx={row.idx}
-              material={row.material}
-              ultima_atualizacao={row.ultima_atualizacao}
-              requerente={row.requerente}
-              status={row.status}
-              prioridade={row.prioridade}
-              tipo={row.tipo}
+              order={row}
+              onHide={props.onHide}
             />
           ))}
         </tbody>

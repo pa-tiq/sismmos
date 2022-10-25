@@ -7,14 +7,6 @@ const OrderProvider = (props) => {
   const [orders, setOrders] = useState([]);
   const [orderID, setOrderID] = useState(1);
 
-  const excludeOrderHandler = (id) => {
-    const updatedItems = orders.filter((item) => {
-      return item.id !== id;
-    });
-    setOrders(updatedItems);
-    setOrderID((prevData) => prevData - 1);
-  };
-
   const removeOrderHandler = async(orderId) => {
     const deleteConfig = {
       url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${orderId}.json`,
@@ -24,10 +16,47 @@ const OrderProvider = (props) => {
       },
     };
     const createTask = () => {
-      excludeOrderHandler(orderId);
+      removeOrder(orderId);
     };
     httpObj.sendRequest(deleteConfig, createTask);
   }
+
+  const removeOrder = (id) => {
+    const updatedItems = orders.filter((item) => {
+      return item.id !== id;
+    });
+    setOrders(updatedItems);
+    setOrderID((prevData) => prevData - 1);
+  };
+
+  const updateOrderHandler = async(order) => {
+    const orderToUpdate = {
+      status:order.status,
+      ultima_atualizacao:order.ultima_atualizacao,
+      material:order.material,
+      requerente:order.requerente,
+      prioridade:order.prioridade,
+      tipo:order.tipo
+    }
+    const deleteConfig = {
+      url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${order.id}.json`,
+      method: "PATCH",
+      body: orderToUpdate,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const createTask = () => {
+      updateOrder(order);
+    };
+    httpObj.sendRequest(deleteConfig, createTask);
+  }
+
+  const updateOrder = (order) => {
+    const updatedItems = [...orders]
+    updatedItems[order.idx-1] = order;
+    setOrders(updatedItems);
+  };
 
   const fetchOrdersHandler = () => {
     const requestConfig = {
@@ -99,7 +128,8 @@ const OrderProvider = (props) => {
         error: httpObj.error,
         addOrder: postOrderHandler,
         removeOrder: removeOrderHandler,
-        fetchOrders: fetchOrdersHandler,
+        updateOrder: updateOrderHandler,
+        fetchOrders: fetchOrdersHandler
       }}
     >
       {props.children}

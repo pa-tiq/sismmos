@@ -2,11 +2,12 @@ import React, { useRef } from "react";
 import classes from "./NewOrderForm.module.css";
 import Button from "../UI/Button/Button";
 
-const NewOrderForm = (props) => {
+const EditOrderForm = (props) => {
   const materialRef = useRef("");
   const requerenteRef = useRef("");
   const prioridadeRef = useRef("");
   const tipoRef = useRef("");
+  const statusRef = useRef("");
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -15,6 +16,7 @@ const NewOrderForm = (props) => {
     const enteredRequerente = requerenteRef.current.value;
     const enteredPrioridade = prioridadeRef.current.value;
     const enteredTipo = tipoRef.current.value;
+    const enteredStatus = statusRef.current.value;
 
     const date = new Date();
     let day = date.getDate();
@@ -28,17 +30,20 @@ const NewOrderForm = (props) => {
       enteredMaterial.trim().length > 0 &&
       enteredRequerente.trim().length > 0 &&
       enteredPrioridade.trim().length > 0 &&
-      enteredTipo.trim().length > 0
+      enteredTipo.trim().length > 0 &&
+      enteredStatus.trim().length > 0
     ) {
       const order = {
-        status: "Novo",
+        idx:props.order.idx,
+        id:props.order.id,
+        status: enteredStatus,
         ultima_atualizacao: currentDate,
         material: enteredMaterial,
         requerente: enteredRequerente,
         prioridade: enteredPrioridade,
         tipo: enteredTipo,
       };
-      props.onEnterOrder(order);
+      props.onEditOrder(order);
     }
   };
 
@@ -46,25 +51,29 @@ const NewOrderForm = (props) => {
     <form className={classes.form_card} onSubmit={submitHandler}>
       <div className={classes.control}>
         <label htmlFor="material">Material</label>
-        <input type="text" id="material" ref={materialRef} />
+        <input type="text" id="material" ref={materialRef} defaultValue={props.order.material}/>
       </div>
       <div className={classes.control}>
         <label htmlFor="requerente">Requerente</label>
-        <input type="text" id="requerente" ref={requerenteRef} />
+        <input type="text" id="requerente" ref={requerenteRef} defaultValue={props.order.requerente}/>
       </div>
       <div className={classes.control}>
         <label htmlFor="prioridade">Prioridade</label>
-        <input type="text" id="prioridade" ref={prioridadeRef} />
+        <input type="text" id="prioridade" ref={prioridadeRef} defaultValue={props.order.prioridade}/>
       </div>
       <div className={classes.control}>
         <label htmlFor="tipo">Tipo</label>
-        <input type="text" id="tipo" ref={tipoRef} />
+        <input type="text" id="tipo" ref={tipoRef} defaultValue={props.order.tipo}/>
+      </div>
+      <div className={classes.control}>
+        <label htmlFor="status">Status</label>
+        <input type="text" id="status" ref={statusRef} defaultValue={props.order.status}/>
       </div>
       <Button onClick={submitHandler} className={classes.button_add}>
-        {props.loading ? "Enviando..." : "Adicionar Ordem"}
+        {props.loading ? "Enviando..." : "Atualizar Ordem"}
       </Button>
     </form>
   );
 };
 
-export default NewOrderForm;
+export default EditOrderForm;
