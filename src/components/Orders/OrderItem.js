@@ -2,9 +2,12 @@ import React, { Fragment, useContext, useState } from "react";
 import classes from "./OrderItem.module.css";
 import OrderContext from "../../store/order-context";
 import EditOrder from "./EditOrder";
+import ConfirmationForm from "../UI/ConfirmationForm/ConfirmationForm";
 
 const OrderItem = (props) => {
   const [showEdit, setShowEdit] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
   const orderContext = useContext(OrderContext);
   const handleRemove = () => {
     orderContext.removeOrder(props.order.id);
@@ -17,6 +20,15 @@ const OrderItem = (props) => {
 
   const hideEditHandler = () => {
     setShowEdit(false);
+  };
+
+  const showDeleteHandler = () => {
+    if (showDeleteConfirmation === true) setShowDeleteConfirmation(false);
+    else setShowDeleteConfirmation(true);
+  };
+
+  const hideDeleteHandler = () => {
+    setShowDeleteConfirmation(false);
   };
 
   return (
@@ -90,11 +102,20 @@ const OrderItem = (props) => {
             className={classes.remove}
             key={`button_remove_${props.order.idx}`}
             id={`button_remove_${props.order.idx}`}
-            onClick={handleRemove}
+            onClick={showDeleteHandler}
           />
         </td>
       </tr>
       {showEdit && <EditOrder onHide={hideEditHandler} order={props.order} />}
+      {showDeleteConfirmation && (
+        <ConfirmationForm
+          onHide={hideDeleteHandler}
+          message={"Tem certeza que quer excluir esse item?"}
+          button_text={"Excluir"}
+          button__loading_text={"Excluindo..."}
+          submitHandler={handleRemove}
+        />
+      )}
     </Fragment>
   );
 };

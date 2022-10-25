@@ -1,0 +1,33 @@
+.control {
+  margin: 0;
+}
+
+.form_card{
+  padding-bottom: 1.5rem;
+}
+
+.message {
+  display: block;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  text-align: left;
+  color: white;
+}
+
+.button_confirm{
+  margin-top:1.5rem;
+  margin-right:1rem;
+  float:right;
+  font: inherit;
+  background: #dd0db0;
+  border: 1px solid #dd0db0;
+  padding: 0.5rem 1.5rem;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+  border-radius: 20px;
+}
