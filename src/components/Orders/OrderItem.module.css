@@ -1,0 +1,55 @@
+.table_row{
+  max-width: inherit;
+}
+
+.table_data {
+  border-top: 2px solid rgb(239, 233, 233);
+  cursor: auto;
+  padding-right: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  width: fit-content;
+  max-width: inherit;
+}
+
+.table_button {
+  border-top: 2px solid rgb(239, 233, 233);
+  cursor: auto;
+  padding-right: 0.6rem;
+  width: fit-content;
+  max-width: inherit;
+  display:inline-flex;
+}
+
+.remove{
+  max-width: 0rem;
+  display: flex;
+  background-color: transparent;
+  cursor:pointer;
+  margin-right: 1rem;
+  border:0;
+  font-size: 30px;
+  color: #dd0db0;
+}
+
+.edit{
+  max-width: 0rem;
+  display: flex;
+  background-color: transparent;
+  cursor:pointer;
+  margin-right: 2rem;
+  border:0;
+  font-size: 30px;
+  color: #dd0db0;
+}
+
+.edit:after {
+  content: '\270E';
+  vertical-align: baseline;
+}
+
+.remove:after {
+  content: '\1F5D1';
+  vertical-align: baseline;
+}

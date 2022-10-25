@@ -9,9 +9,9 @@ const Dashboard = () => {
   return (
     <section className={classes.dashboard}>
       <div className={classes.header}>
-        <h1
-          className={classes.title}
-        >{`Oi caralhudo, vc tem ${orderContext.orderID} ordens de serviço cadastradas`}</h1>
+        <h1 className={classes.title}>{`Oi caralhudo, vc tem ${
+          orderContext.orderID - 1
+        } ordens de serviço cadastradas`}</h1>
       </div>
       <div className={classes.summary}>
         <Card className={classes.card}>Oieeeeeeee</Card>

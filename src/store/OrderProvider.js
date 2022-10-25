@@ -7,13 +7,27 @@ const OrderProvider = (props) => {
   const [orders, setOrders] = useState([]);
   const [orderID, setOrderID] = useState(1);
 
-  const removeOrderHandler = (id) => {
+  const excludeOrderHandler = (id) => {
     const updatedItems = orders.filter((item) => {
       return item.id !== id;
     });
     setOrders(updatedItems);
     setOrderID((prevData) => prevData - 1);
   };
+
+  const removeOrderHandler = async(orderId) => {
+    const deleteConfig = {
+      url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${orderId}.json`,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const createTask = () => {
+      excludeOrderHandler(orderId);
+    };
+    httpObj.sendRequest(deleteConfig, createTask);
+  }
 
   const fetchOrdersHandler = () => {
     const requestConfig = {
@@ -24,6 +38,7 @@ const OrderProvider = (props) => {
       let index = 1;
       for (const orderKey in newOrders) {
         loadedOrders.push({
+          id:orderKey,
           idx: `${index}`,
           status: newOrders[orderKey].status,
           material: newOrders[orderKey].material,

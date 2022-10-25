@@ -1,5 +1,4 @@
 import React, {useContext} from "react";
-import useHttp from "../../hooks/use-http";
 import NewOrderForm from "./NewOrderForm";
 import Modal from "../UI/Modal/Modal";
 import OrderContext from "../../store/order-context";

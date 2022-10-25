@@ -4,6 +4,7 @@ import classes from "./Home.module.css";
 import NavigationSide from "./NavigationSide";
 import Orders from "../Orders/Orders";
 import Dashboard from "../Dashboard/Dashbard";
+
 const Home = () => {
 
   const views = [ "dashboard", "ordens" ];
