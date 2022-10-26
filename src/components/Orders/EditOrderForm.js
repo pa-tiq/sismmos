@@ -24,7 +24,9 @@ const EditOrderForm = (props) => {
     let year = date.getFullYear();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    let currentDate = `${day}/${month}/${year} ${hours}:${minutes}`;
+    let zero = ''
+    if (minutes < 10) zero = '0';
+    let currentDate = `${day}/${month}/${year} ${hours}:${zero}${minutes}`;
 
     if (
       enteredMaterial.trim().length > 0 &&
@@ -33,9 +35,26 @@ const EditOrderForm = (props) => {
       enteredTipo.trim().length > 0 &&
       enteredStatus.trim().length > 0
     ) {
+      const diff = {
+        status: props.order.status === enteredStatus,
+        material: props.order.material === enteredMaterial,
+        requerente: props.order.requerente === enteredRequerente,
+        prioridade: props.order.prioridade === enteredPrioridade,
+        tipo: props.order.tipo === enteredTipo,
+      };
+
+      if (
+        diff.status &&
+        diff.material &&
+        diff.requerente &&
+        diff.prioridade &&
+        diff.tipo
+      )
+        return;
+
       const order = {
-        idx:props.order.idx,
-        id:props.order.id,
+        idx: props.order.idx,
+        id: props.order.id,
         status: enteredStatus,
         ultima_atualizacao: currentDate,
         material: enteredMaterial,
@@ -51,23 +70,48 @@ const EditOrderForm = (props) => {
     <form className={classes.form_card} onSubmit={submitHandler}>
       <div className={classes.control}>
         <label htmlFor="material">Material</label>
-        <input type="text" id="material" ref={materialRef} defaultValue={props.order.material}/>
+        <input
+          type="text"
+          id="material"
+          ref={materialRef}
+          defaultValue={props.order.material}
+        />
       </div>
       <div className={classes.control}>
         <label htmlFor="requerente">Requerente</label>
-        <input type="text" id="requerente" ref={requerenteRef} defaultValue={props.order.requerente}/>
+        <input
+          type="text"
+          id="requerente"
+          ref={requerenteRef}
+          defaultValue={props.order.requerente}
+        />
       </div>
       <div className={classes.control}>
         <label htmlFor="prioridade">Prioridade</label>
-        <input type="text" id="prioridade" ref={prioridadeRef} defaultValue={props.order.prioridade}/>
+        <input
+          type="text"
+          id="prioridade"
+          ref={prioridadeRef}
+          defaultValue={props.order.prioridade}
+        />
       </div>
       <div className={classes.control}>
         <label htmlFor="tipo">Tipo</label>
-        <input type="text" id="tipo" ref={tipoRef} defaultValue={props.order.tipo}/>
+        <input
+          type="text"
+          id="tipo"
+          ref={tipoRef}
+          defaultValue={props.order.tipo}
+        />
       </div>
       <div className={classes.control}>
         <label htmlFor="status">Status</label>
-        <input type="text" id="status" ref={statusRef} defaultValue={props.order.status}/>
+        <input
+          type="text"
+          id="status"
+          ref={statusRef}
+          defaultValue={props.order.status}
+        />
       </div>
       <Button onClick={submitHandler} className={classes.button_add}>
         {props.loading ? "Enviando..." : "Atualizar Ordem"}

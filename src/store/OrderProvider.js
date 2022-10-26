@@ -7,7 +7,7 @@ const OrderProvider = (props) => {
   const [orders, setOrders] = useState([]);
   const [orderID, setOrderID] = useState(1);
 
-  const removeOrderHandler = async(orderId) => {
+  const removeOrderHandler = async (orderId) => {
     const deleteConfig = {
       url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${orderId}.json`,
       method: "DELETE",
@@ -19,7 +19,7 @@ const OrderProvider = (props) => {
       removeOrder(orderId);
     };
     httpObj.sendRequest(deleteConfig, createTask);
-  }
+  };
 
   const removeOrder = (id) => {
     const updatedItems = orders.filter((item) => {
@@ -29,15 +29,32 @@ const OrderProvider = (props) => {
     setOrderID((prevData) => prevData - 1);
   };
 
-  const updateOrderHandler = async(order) => {
-    const orderToUpdate = {
-      status:order.status,
-      ultima_atualizacao:order.ultima_atualizacao,
-      material:order.material,
-      requerente:order.requerente,
-      prioridade:order.prioridade,
-      tipo:order.tipo
+  const updateOrderHandler = async (order) => {
+    const oldOrder = orders[order.idx - 1];
+    const diff = {
+      status: order.status === oldOrder.status,
+      material: order.material === oldOrder.material,
+      requerente: order.requerente === oldOrder.requerente,
+      prioridade: order.prioridade === oldOrder.prioridade,
+      tipo: order.tipo === oldOrder.tipo,
+    };
+    let logNovo = [...oldOrder.log];
+    for (const [key, value] of Object.entries(diff)) {
+      if (value === false) {
+        const msg = `[${order.ultima_atualizacao}] ${key}: "${oldOrder[key]}" → "${order[key]}" `;
+        logNovo.push(msg);
+      }
     }
+    order.log = logNovo;
+    const orderToUpdate = {
+      status: order.status,
+      ultima_atualizacao: order.ultima_atualizacao,
+      material: order.material,
+      requerente: order.requerente,
+      prioridade: order.prioridade,
+      tipo: order.tipo,
+      log: order.log
+    };
     const deleteConfig = {
       url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${order.id}.json`,
       method: "PATCH",
@@ -50,11 +67,11 @@ const OrderProvider = (props) => {
       updateOrder(order);
     };
     httpObj.sendRequest(deleteConfig, createTask);
-  }
+  };
 
   const updateOrder = (order) => {
-    const updatedItems = [...orders]
-    updatedItems[order.idx-1] = order;
+    const updatedItems = [...orders];
+    updatedItems[order.idx - 1] = order;
     setOrders(updatedItems);
   };
 
@@ -67,7 +84,7 @@ const OrderProvider = (props) => {
       let index = 1;
       for (const orderKey in newOrders) {
         loadedOrders.push({
-          id:orderKey,
+          id: orderKey,
           idx: `${index}`,
           status: newOrders[orderKey].status,
           material: newOrders[orderKey].material,
@@ -75,6 +92,7 @@ const OrderProvider = (props) => {
           requerente: newOrders[orderKey].requerente,
           prioridade: newOrders[orderKey].prioridade,
           tipo: newOrders[orderKey].tipo,
+          log: newOrders[orderKey].log,
         });
         index++;
       }
@@ -84,7 +102,9 @@ const OrderProvider = (props) => {
     httpObj.sendRequest(requestConfig, updateOrders);
   };
 
-  const postOrderHandler = async(order) => {
+  const postOrderHandler = async (order) => {
+    const log = [`Log do objeto ${orderID}: "${order.material}" `,`Criado em ${order.ultima_atualizacao} `];
+    order.log = log;
     const postConfig = {
       url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
       method: "POST",
@@ -96,23 +116,34 @@ const OrderProvider = (props) => {
     const createTask = (orderData) => {
       const generatedId = orderData.name; //firebase-specific: "name" contains generated id
       const loadedOrder = {
-        id:generatedId,
-        status:order.status,
-        ultima_atualizacao:order.ultima_atualizacao,
-        material:order.material,
-        requerente:order.requerente,
-        prioridade:order.prioridade,
-        tipo:order.tipo
-      }
+        id: generatedId,
+        status: order.status,
+        ultima_atualizacao: order.ultima_atualizacao,
+        material: order.material,
+        requerente: order.requerente,
+        prioridade: order.prioridade,
+        tipo: order.tipo,
+        log: order.log
+      };
       addOrderHandler(loadedOrder);
     };
     httpObj.sendRequest(postConfig, createTask);
-  }
+  };
 
   const addOrderHandler = (order) => {
     order.idx = `${orderID}`;
     setOrders((prevData) => prevData.concat(order));
     setOrderID((prevData) => prevData + 1);
+  };
+
+  const getOrderLog = (orderId) => {
+    const getLogConfig = {
+      url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${orderId}/log.json`,
+    };
+    const getLogTask = (orderData) => {
+      console.log(orderData);
+    };
+    httpObj.sendRequest(getLogConfig, getLogTask);
   };
 
   useEffect(() => {
@@ -126,10 +157,11 @@ const OrderProvider = (props) => {
         orderID: orderID,
         isLoading: httpObj.isLoading,
         error: httpObj.error,
+        getLog: getOrderLog,
         addOrder: postOrderHandler,
         removeOrder: removeOrderHandler,
         updateOrder: updateOrderHandler,
-        fetchOrders: fetchOrdersHandler
+        fetchOrders: fetchOrdersHandler,
       }}
     >
       {props.children}

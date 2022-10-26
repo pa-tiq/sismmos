@@ -8,7 +8,7 @@
 
 .message {
   display: block;
-  font-weight: bold;
+  font-weight: bolder;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
@@ -16,12 +16,25 @@
   margin-right: 0.5rem;
   text-align: left;
   color: white;
+  font-size: x-large;
+}
+
+.message_secondary {
+  white-space: pre-line;
+  display: block;
+  font-weight: normal;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  text-align: left;
+  color: white;
 }
 
 .button_confirm{
-  margin-top:1.5rem;
-  margin-right:1rem;
-  float:right;
+  margin-right:0.5rem;
+  margin-bottom:0.5rem;
+  float: right;
   font: inherit;
   background: #dd0db0;
   border: 1px solid #dd0db0;

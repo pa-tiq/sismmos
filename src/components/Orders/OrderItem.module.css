@@ -33,6 +33,7 @@
   color: #dd0db0;
 }
 
+.details,
 .edit{
   max-width: 0rem;
   display: flex;
@@ -44,12 +45,18 @@
   color: #dd0db0;
 }
 
+.details:after{
+  content: '\1F50D \FE0E';
+  vertical-align: baseline;
+}
+
 .edit:after {
   content: '\270E';
   vertical-align: baseline;
 }
 
 .remove:after {
-  content: '\1F5D1';
+  /*content: '\1F5D1';*/
+  content: '\1F5D9';
   vertical-align: baseline;
 }

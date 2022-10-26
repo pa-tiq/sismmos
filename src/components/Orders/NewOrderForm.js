@@ -22,7 +22,9 @@ const NewOrderForm = (props) => {
     let year = date.getFullYear();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    let currentDate = `${day}/${month}/${year} ${hours}:${minutes}`;
+    let zero = ''
+    if (minutes < 10) zero = '0';
+    let currentDate = `${day}/${month}/${year} ${hours}:${zero}${minutes}`;
 
     if (
       enteredMaterial.trim().length > 0 &&
