@@ -40,7 +40,7 @@ const OrderProvider = (props) => {
     };
     let logNovo = [...oldOrder.log];
     for (const [key, value] of Object.entries(diff)) {
-      if (value === false) {
+      if (!value) {
         const msg = `[${order.ultima_atualizacao}] ${key}: "${oldOrder[key]}" → "${order[key]}" `;
         logNovo.push(msg);
       }
