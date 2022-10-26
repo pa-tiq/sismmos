@@ -62,7 +62,9 @@ const Orders = () => {
     let searchData = [];
     orders.forEach((row) => {
       const needleFoundInRow = Object.values(row).find((element) => {
-        if (element.toLowerCase().includes(needle)) return true;
+        if (typeof(element) !== "object"){
+          if (element.toLowerCase().includes(needle)) return true;
+        }
       });
       if (needleFoundInRow) {
         searchData.push(row);
