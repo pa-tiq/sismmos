@@ -1,0 +1,33 @@
+.admin{
+  display: flex;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title{
+  align-self: center;
+  text-emphasis-color: white;
+  outline: white;
+  color: white;
+}
+
+.summary{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left:1rem;
+}
+
+.card{
+  float:right;
+  padding-left:0.8rem;
+  padding-right:0.8rem;
+  padding-top:0.2rem;
+  padding-bottom:0.2rem;
+  max-width: 30rem;
+  color:white;
+}

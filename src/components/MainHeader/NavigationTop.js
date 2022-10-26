@@ -4,6 +4,7 @@ import classes from "./NavigationTop.module.css";
 
 const NavigationTop = () => {
   const context = useContext(AuthContext);
+
   return (
     <nav className={classes.nav}>
       <ul>
