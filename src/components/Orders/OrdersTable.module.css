@@ -1,5 +1,6 @@
 .message{
   color:white;
+  padding:1rem;
 }
 
 .table {
@@ -48,4 +49,9 @@
   padding-left: 25px;
   width: fit-content;
   max-width: inherit;
+}
+
+.button{
+  margin-top: 1rem;
+  margin-bottom: 0rem;
 }

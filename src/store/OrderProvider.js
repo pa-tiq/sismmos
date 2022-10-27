@@ -242,9 +242,9 @@ const OrderProvider = (props) => {
 
   useEffect(() => {
     fetchOrdersHandler();
-    setTimeout(() => {
-      fetchConstraintsHandler();
-    }, 5000);
+    //setTimeout(() => {
+    //  fetchConstraintsHandler();
+    //}, 5000);
   }, []); //this only runs once - when the app starts
 
   return (

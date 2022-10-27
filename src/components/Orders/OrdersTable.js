@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import classes from "./OrdersTable.module.css";
 import OrderItem from "./OrderItem";
+import Button from "../UI/Button/Button";
 
 const HEADERS = [
   ["ID", "idx"],
@@ -96,7 +97,13 @@ const OrdersTable = (props) => {
   let content = ordersTable;
 
   if (props.error) {
-    content = <button onClick={props.onFetch}>Tentar Novamente</button>;
+    console.log(props.error.substring(0,12));
+    let error = props.error.substring(0,12)==='NetworkError' ? 'Erro: acho que vc tá offline' : props.error;
+    content = 
+      <Fragment>
+        <Button onClick={props.onFetch} className={classes.button}>Tentar Novamente</Button>;
+        {props.error && <p className={classes.message}>{error}</p>}
+      </Fragment>
   }
 
   if (props.loading) {
