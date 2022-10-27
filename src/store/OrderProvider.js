@@ -76,7 +76,7 @@ const OrderProvider = (props) => {
     setOrders(updatedItems);
   };
 
-  const fetchOrdersHandler = () => {
+  const fetchOrdersHandler = async () => {
     const requestConfig = {
       url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
     };
@@ -222,19 +222,25 @@ const OrderProvider = (props) => {
     httpObj.sendRequest(updateConfig, createTask);
   };
 
-  const fetchConstraintsHandler = () => {
+  const fetchConstraintsHandler = async () => {
     const requestConfig = {
       url: "https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json",
     };
     const updateConstraints = (constraints) => {
-      const loadedConstraints = {
-        status: constraints.status,
-        ultima_atualizacao: constraints.ultima_atualizacao,
-        requerente: constraints.requerente,
-        prioridade: constraints.prioridade,
-        tipo: constraints.tipo,
-        log: constraints.log,
-      };
+      let loadedConstraints = {};
+      if(!constraints){
+        loadedConstraints = {}
+      }
+      else{
+        loadedConstraints = {
+          status: constraints.status,
+          requerente: constraints.requerente,
+          prioridade: constraints.prioridade,
+          tipo: constraints.tipo,
+          ultima_atualizacao: constraints.ultima_atualizacao,
+          log: constraints.log,
+        };
+      }
       setConstraints(loadedConstraints);
     };
     httpObj.sendRequest(requestConfig, updateConstraints);
@@ -242,9 +248,7 @@ const OrderProvider = (props) => {
 
   useEffect(() => {
     fetchOrdersHandler();
-    //setTimeout(() => {
-    //  fetchConstraintsHandler();
-    //}, 5000);
+    fetchConstraintsHandler();    
   }, []); //this only runs once - when the app starts
 
   return (

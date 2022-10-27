@@ -27,7 +27,7 @@
 .control input,
 .control textarea {
   margin-left: 1rem;
-  margin-right: 1rem;
+  margin-right: 2rem;
   display: inline;
   width: 10%;
   font: inherit;
@@ -60,7 +60,7 @@
 .constraint_button{
   margin-top:1.5rem;
   margin-right:1rem;
-  margin-left:1rem;
+  margin-left:0.1rem;
   font: inherit;
   display: inline;
   background: #dd0db0;
