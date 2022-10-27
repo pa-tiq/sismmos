@@ -1,3 +1,10 @@
+.card_admin{
+  margin-right: 1rem;
+  margin-left: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .admin{
   display: flex;
 }

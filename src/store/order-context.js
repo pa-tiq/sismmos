@@ -5,11 +5,15 @@ const OrderContext = React.createContext({
   orderID: 0,
   isLoading: false,
   error: null,
+  constraints: {},
   getLog: (orderId) => {},
   addOrder: (order) => {},
   removeOrder: (orderId) => {},
   updateOrder: (order) => {},
   fetchOrders: () => {},
+  putConstraints: () => {},
+  updateConstraints: () => {},
+  fetchConstraints: () => {},
 });
 
 export default OrderContext;

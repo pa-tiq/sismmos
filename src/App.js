@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import MainHeader from "./components/MainHeader/MainHeader";
+import Admin from "./components/Admin/Admin";
 import AuthContext from "./store/auth-context";
 import OrderProvider from "./store/OrderProvider";
 
@@ -17,12 +18,13 @@ function App() {
 
   return (
     <React.Fragment>
-      <MainHeader />
+      <MainHeader views={views} onChangeView={changeViewHandler}/>
       <main>
         {!authContext.isLoggedIn && <Login/>}
         {authContext.isLoggedIn && (
           <OrderProvider>
-            <Home />
+            {activeView === views[0] && <Home />}
+            {activeView === views[2] && <Admin />}
           </OrderProvider>
         )}
       </main>
