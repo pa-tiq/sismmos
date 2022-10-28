@@ -8,10 +8,16 @@ const DUMMY = [
 
 const ConstraintForm = (props) => {
 
-  const [constraints, setConstraints] = useState([]);
+  const [constraints, setConstraints] = useState(props.constraints);
   const [edit,setEdit] = useState(null);
 
   const inputForm = useRef(null);
+
+  useEffect(() => {
+    if(JSON.stringify(constraints) !== JSON.stringify(props.constraints)){
+      props.updateConstraints(props.field,constraints);
+    }
+  },[constraints])
 
   useEffect(() => {
     if(inputForm.current) inputForm.current.focus();
@@ -33,7 +39,11 @@ const ConstraintForm = (props) => {
   }
 
   function handleBlur(e){
+    const input = e.target.value;
+    const dataCopy = [...constraints]
+    dataCopy[edit.row] = input;
     setEdit(null);
+    setConstraints(dataCopy);
   }
 
   function handleKeyDown(e){
@@ -43,11 +53,19 @@ const ConstraintForm = (props) => {
   }
   
   const addRowHandler = () => {
-
+    const newcon = [...constraints];
+    if(newcon.length !== 0){
+      if (newcon[newcon.length-1] === '') return;
+    }
+    newcon.push('');
+    setConstraints(newcon);
   }
 
   const deleteRowHandler = () => {
-    
+    const newcon = [...constraints];
+    if(newcon.length === 0) return;
+    newcon.pop();
+    setConstraints(newcon);
   }
 
   const constraintsColumn = (
@@ -69,7 +87,7 @@ const ConstraintForm = (props) => {
         </tr>
       </thead>
       <tbody className={classes.table_body}>
-        {DUMMY.map((row,idx)=>{
+        {constraints.map((row,idx)=>{
           if (edit && edit.row === idx) {
             row = (
               <form onSubmit={handleSubmit} onBlur={handleBlur} onKeyDown={handleKeyDown}>

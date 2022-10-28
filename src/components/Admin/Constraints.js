@@ -8,23 +8,41 @@ const Constraints = () => {
   const orderContext = useContext(OrderContext);
   const { constraints: constraints } = orderContext.constraints;
   const [constrArr, setConstrArr] = useState([]);
+  const [constrObj, setConstrObj] = useState({});
+  const [updateIsValid, setUpdateIsValid] = useState(false);
 
   const submitHandler = (event) => {
     event.preventDefault();
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let zero = ''
+    if (minutes < 10) zero = '0';
+    let currentDate = `${day}/${month}/${year} ${hours}:${zero}${minutes}`;
+    constrObj.ultima_atualizacao = currentDate;
+    orderContext.updateConstraints(constrObj);
   };
 
-  const handleUpdateConstraints = (field,cons) => {
+  const handleUpdateConstraints = (field,cons) => {    
     let newConst = {};
-    if(!constraints){
+    if(!constraints && cons){
       newConst[`${field}`] = cons;
-      orderContext.updateConstraints(newConst);
+      setConstrObj(newConst);
+      setUpdateIsValid(true);
     }
     else{
       for (const [key,value] of Object.keys(constraints)){
         newConst[`${key}`] = [...value];
       }
+      if (JSON.stringify(newConst[`${field}`]) === JSON.stringify(cons)){
+        return;
+      }
       newConst[`${field}`] = cons;
-      orderContext.updateConstraints(newConst);
+      setConstrObj(newConst);
+      setUpdateIsValid(true);
     }
   }
 
@@ -32,19 +50,21 @@ const Constraints = () => {
   useEffect(() => {
     if (!constraints) {
       constr = [
-        ["status", ""],
-        ["requerente", ""],
-        ["prioridade", ""],
-        ["tipo", ""],
+        ["status"],
+        ["requerente"],
+        ["prioridade"],
+        ["tipo"],
       ];
     } else {
       let index = 0;
       for (const [key, value] of Object.entries(constraints)) {
-        constr[index].push(key);
-        value.forEach((element) => {
-          constr[index].push(element);
-        });
-        index++;
+        if( key!=="ultima_atualizacao" && key!=="log"){
+          constr[index].push(key);
+          value.forEach((element) => {
+            constr[index].push(element);
+          });
+          index++;
+        }
       }
     }
     setConstrArr(constr);
@@ -64,7 +84,7 @@ const Constraints = () => {
           );
         })}
       </section>
-      <Button onClick={submitHandler} className={classes.button_add}>
+      <Button disabled={!updateIsValid} onClick={submitHandler} className={classes.button_add}>
         Salvar Restrições
       </Button>
     </Fragment>
