@@ -9,14 +9,24 @@ const Constraints = () => {
   const { constraints: constraints } = orderContext.constraints;
   const [constrArr, setConstrArr] = useState([]);
 
-  const statusRef = useRef("");
-  const requerenteRef = useRef("");
-  const prioridadeRef = useRef("");
-  const tipoRef = useRef("");
-
   const submitHandler = (event) => {
     event.preventDefault();
   };
+
+  const handleUpdateConstraints = (field,cons) => {
+    let newConst = {};
+    if(!constraints){
+      newConst[`${field}`] = cons;
+      orderContext.updateConstraints(newConst);
+    }
+    else{
+      for (const [key,value] of Object.keys(constraints)){
+        newConst[`${key}`] = [...value];
+      }
+      newConst[`${field}`] = cons;
+      orderContext.updateConstraints(newConst);
+    }
+  }
 
   let constr = [];
   useEffect(() => {
@@ -49,6 +59,7 @@ const Constraints = () => {
               field={element[0]}
               constraints={element.slice(1)}
               key={element[0]}
+              updateConstraints={handleUpdateConstraints}
             />
           );
         })}
@@ -57,7 +68,7 @@ const Constraints = () => {
         Salvar Restrições
       </Button>
     </Fragment>
-  )
+  );
 };
 
 export default Constraints;
