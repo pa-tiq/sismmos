@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useContext, useRef, useEffect, Fragment } from "react";
 import classes from "./Constraints.module.css";
 import OrderContext from "../../store/order-context";
 import Button from "../UI/Button/Button";
@@ -41,21 +41,23 @@ const Constraints = () => {
   }, [constraints]);
 
   return (
-    <section className={classes.card_admin}>
-      {constrArr.map((element) => {
-        return (
-          <ConstraintForm
-            field={element[0]}
-            constraints={element.slice(1)}
-            key={element[0]}
-          />
-        );
-      })}
+    <Fragment>
+      <section className={classes.card_admin}>
+        {constrArr.map((element) => {
+          return (
+            <ConstraintForm
+              field={element[0]}
+              constraints={element.slice(1)}
+              key={element[0]}
+            />
+          );
+        })}
+      </section>
       <Button onClick={submitHandler} className={classes.button_add}>
         Salvar Restrições
       </Button>
-    </section>
-  );
+    </Fragment>
+  )
 };
 
 export default Constraints;

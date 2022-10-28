@@ -1,102 +1,104 @@
 import React, { useState, Fragment, useRef, useEffect } from "react";
-import classes from "./Constraints.module.css";
+import classes from "./ConstraintForm.module.css";
+
+const DUMMY = [
+  'OI',
+  'FDP',
+]
 
 const ConstraintForm = (props) => {
 
   const [constraints, setConstraints] = useState([]);
-  const [amount, setAmount] = useState(1);
+  const [edit,setEdit] = useState(null);
 
-  const AddInputHandler = (event) => {
-    event.preventDefault();
-    let constr = [];
-    let element = [];
-    for(let i=0; i<amount; i++){
-      element = document.getElementById(`${props.field}_${i}`);
-      constr.push(element.value);
-    }
-    setConstraints(constr);
-    setAmount((prevAmount) => prevAmount + 1);    
-  };
+  const inputForm = useRef(null);
 
-  const DeleteInputHandler = (event) => {
-    event.preventDefault();
-    setAmount((prevAmount) => {
-      if (prevAmount > 1) return prevAmount - 1;
-      else return prevAmount;
+  useEffect(() => {
+    if(inputForm.current) inputForm.current.focus();
+  },[edit]);
+
+  function showEditor(e){
+    setEdit({
+      row: parseInt(e.target.id),
     });
-  };
-
-  const handleInputBlur = (e) => {
-    console.log('inputblur: ',e.target.value);
   }
 
-  useEffect(() => {
-    setConstraints(props.constraints);
-    props.constraints.length == 0
-      ? setAmount(1)
-      : setAmount(props.constraints.length);
-  }, []);
-
-  let inputs = <input type="text" id={`${props.field}_0`} onBlur={handleInputBlur} defaultValue={constraints[0]}/>;
-
-  useEffect(() => {
-
-  }, [amount, constraints]);
-
-  if (amount > 1 && amount === constraints.length) {
-    inputs = (
-      <Fragment>
-        {constraints.map((element, idx) => {
-          return (
-            <input
-              type="text"
-              id={`${props.field}_${idx}`}
-              defaultValue={element}
-              onBlur={handleInputBlur}
-            />
-          );
-        })}
-      </Fragment>
-    );
+  function handleSubmit(e){
+    e.preventDefault();
+    const input = e.target.firstChild.value;
+    const dataCopy = [...constraints]
+    dataCopy[edit.row] = input;
+    setEdit(null);
+    setConstraints(dataCopy);
   }
-  if (amount > 1 && amount > constraints.length) {
-    let n = [0];
-    for (let i = 1; i < amount; i++) {
-      n.push(i);
+
+  function handleBlur(e){
+    setEdit(null);
+  }
+
+  function handleKeyDown(e){
+    if(e.key == "Escape"){
+      setEdit(null);
     }
-    inputs = (
-      <Fragment>
-        {n.map((idx) => {
-          return (
-            <input
-              type="text"
-              id={`${props.field}_${idx}`}
-              key={idx}
-              onBlur={handleInputBlur}
-              defaultValue={constraints[idx]}
-            />
-          );
-        })}
-      </Fragment>
-    );
+  }
+  
+  const addRowHandler = () => {
+
+  }
+
+  const deleteRowHandler = () => {
     
   }
 
-  let content = <Fragment>{inputs}</Fragment>;
+  const constraintsColumn = (
+    <table className={classes.table} key={`${props.field}_table`}>
+      <thead className={classes.table_header}>
+        <tr className={classes.table_row}>
+          <th className={classes.table_header}>
+            {props.field}
+            <button
+              className={classes.button_remove}
+              onClick={deleteRowHandler}
+            />
+            <button
+              className={classes.button_add}
+              onClick={addRowHandler}
+            />
+          </th>
+          <th className={classes.table_header}></th>
+        </tr>
+      </thead>
+      <tbody className={classes.table_body}>
+        {DUMMY.map((row,idx)=>{
+          if (edit && edit.row === idx) {
+            row = (
+              <form onSubmit={handleSubmit} onBlur={handleBlur} onKeyDown={handleKeyDown}>
+              <input ref={inputForm} type="text" defaultValue={row} />
+              </form>
+            );
+          }
+          return(
+            <tr className={classes.table_row} key={`${props.field}_row_${idx}`}>
+              <td className={classes.table_data}>
+                {row}
+              </td>
+              <td className={classes.table_button}>
+                <button
+                  className={classes.button_edit}
+                  onClick={showEditor}
+                  id={idx}
+                />
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );  
 
   return (
     <div className={classes.control}>
-      <label htmlFor={`${props.field}_0`}>{props.field.toUpperCase()}</label>
-      {content}
-      <button
-        className={classes.constraint_button}
-        onClick={DeleteInputHandler}
-      >
-        ➖
-      </button>
-      <button className={classes.constraint_button} onClick={AddInputHandler}>
-        ➕
-      </button>
+      {constraintsColumn}
     </div>
   );
 };

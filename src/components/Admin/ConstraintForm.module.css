@@ -1,0 +1,131 @@
+.control {
+  margin: 0;
+}
+
+.control label {
+  display: flex;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  text-align: left;
+  color: white;
+  font-size: large;
+  min-width: 140px;
+}
+
+.control input,
+.control textarea {
+  display: flex;
+  width: inherit;
+  font: inherit;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+}
+
+.constraint_button {
+  margin-top: 1.5rem;
+  margin-right: 1rem;
+  margin-left: 0.1rem;
+  font: inherit;
+  display: inline;
+  background: #dd0db0;
+  border: 1px solid #dd0db0;
+  padding: 0.5rem 0.5rem;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+  border-radius: 20px;
+}
+
+.table {
+  display: inline-table;
+  margin: 0;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
+  max-width: inherit;
+  font-size: large;
+  color: white;
+}
+
+.table_header {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  max-width: inherit;
+}
+
+.table_header_actions {
+  align-items: center;
+  border-top: 2px solid rgb(239, 233, 233);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  max-width: inherit;
+  color: #dd0db0;
+}
+
+.table_row,
+.table_body {
+  max-width: inherit;
+}
+
+.table_data {
+  border-top: 2px solid rgb(239, 233, 233);
+  cursor: auto;
+  padding-right: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 25px;
+  width: fit-content;
+  max-width: inherit;
+}
+
+.table_button {
+  border-top: 2px solid rgb(239, 233, 233);
+  cursor: auto;
+  padding-right: 0.6rem;
+  padding-bottom: 12px;
+  width: fit-content;
+  max-width: inherit;
+  display:inline-flex;
+}
+
+.button_edit,
+.button_add,
+.button_remove {
+  max-width: 0rem;
+  display: inline-block;
+  background-color: transparent;
+  cursor: pointer;
+  margin-right: 1rem;
+  border: 0;
+  font-size: 30px;
+  color: #dd0db0;
+}
+
+.button_add {
+  margin-right: 1.52rem;
+}
+
+.button_edit:after {
+  content: '\270E';
+  vertical-align: baseline;
+}
+
+.button_add:after {
+  content: "\FF0B";
+  font-weight: bolder;
+  vertical-align: baseline;
+}
+
+.button_remove:after {
+  content: "\FF0D";
+  font-weight: bolder;
+  vertical-align: baseline;
+}
