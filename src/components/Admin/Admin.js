@@ -9,7 +9,10 @@ const Admin = () => {
       <div className={classes.header}>
         <h1 className={classes.title}>{`Oi Admin!`}</h1>
       </div>
-      <Constraints/>
+      <details className={classes.details}>
+        <summary>Restrições de dados</summary>
+        <Constraints/>
+      </details>
     </Card>
   );
 };

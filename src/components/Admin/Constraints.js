@@ -3,6 +3,7 @@ import classes from "./Constraints.module.css";
 import OrderContext from "../../store/order-context";
 import Button from "../UI/Button/Button";
 import ConstraintForm from "./ConstraintForm";
+import Card from "../UI/Card/Card";
 
 const Constraints = () => {
   const orderContext = useContext(OrderContext);
@@ -95,8 +96,8 @@ const Constraints = () => {
   }, []);
 
   return (
-    <Fragment>
-      <section className={classes.card_admin}>
+    <Card className={classes.card_constraints}>
+      <section className={classes.section_constraints}>
         {constrArr.map((element) => {
           return (
             <ConstraintForm
@@ -109,9 +110,9 @@ const Constraints = () => {
         })}
       </section>
       <Button disabled={!updateIsValid} onClick={submitHandler} className={classes.button_add}>
-        Salvar Restrições
+        Salvar Alterações
       </Button>
-    </Fragment>
+    </Card>
   );
 };
 

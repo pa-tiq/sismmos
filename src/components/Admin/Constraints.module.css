@@ -1,10 +1,14 @@
-.card_admin{
-  margin-right: 1rem;
-  margin-left: 1rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-bottom: 6rem;
+.section_constraints{
+  margin-right: 0rem;
+  margin-left: 0rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 5rem;
   display:flex;
+}
+
+.card_constraints{
+  max-width: fit-content;
 }
 
 .control input:focus,
@@ -14,9 +18,8 @@
 }
 
 .button_add{
-  margin-top:1.5rem;
+  margin-top:-4rem;
   margin-right:1rem;
-  margin-left:5rem;
   float:right;
   font: inherit;
   background: #dd0db0;

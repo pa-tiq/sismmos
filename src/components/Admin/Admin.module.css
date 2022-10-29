@@ -3,6 +3,8 @@
   margin-left: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  padding-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .admin{
@@ -37,4 +39,11 @@
   padding-bottom:0.2rem;
   max-width: 30rem;
   color:white;
+}
+
+.details{
+  color:white;
+  font:bold;
+  font-family: inherit;
+  font-size: large;
 }
