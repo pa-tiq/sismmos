@@ -1,4 +1,10 @@
-import React, { useState, useContext, useRef, useEffect, Fragment } from "react";
+import React, {
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+  Fragment,
+} from "react";
 import classes from "./Constraints.module.css";
 import OrderContext from "../../store/order-context";
 import Button from "../UI/Button/Button";
@@ -20,72 +26,73 @@ const Constraints = () => {
     let year = date.getFullYear();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    let zero = '';
-    if (minutes < 10) zero = '0';
+    let zero = "";
+    if (minutes < 10) zero = "0";
     let currentDate = `${day}/${month}/${year} ${hours}:${zero}${minutes}`;
     constrObj.ultima_atualizacao = currentDate;
-    if(!constraints || Object.keys(constraints).length === 0){
+    if (!constraints || Object.keys(constraints).length === 0) {
       orderContext.putConstraints(constrObj);
-    }
-    else{
+    } else {
       orderContext.updateConstraints(constrObj);
     }
-    setUpdateIsValid(false)
+    setUpdateIsValid(false);
   };
 
-  useEffect(()=>{
-    let valid = false;
-    for (const [value] of Object.values(constrObj)){
-      if(value) valid = true;
-    }
-    if(constraints){
-      for (const [key,value] of Object.entries(constraints)){
-        if(key!=="ultima_atualizacao" && key!=="log" && value){
-          valid = JSON.stringify(value) !== JSON.stringify(constrObj[key]);
-        }
-      }
-    }
-    setUpdateIsValid(valid);
-  },[constrObj,constraints]);
+  //useEffect(()=>{
+  //  let valid = false;
+  //  for (const [value] of Object.values(constrObj)){
+  //    if(value) valid = true;
+  //  }
+  //  if(constraints){
+  //    for (const [key,value] of Object.entries(constraints)){
+  //      if(key!=="ultima_atualizacao" && key!=="log" && value){
+  //        valid = JSON.stringify(value) !== JSON.stringify(constrObj[key]);
+  //      }
+  //    }
+  //  }
+  //  setUpdateIsValid(valid);
+  //},[constrObj,constraints]);
 
-  const handleUpdateConstraints = (field,cons) => {  
+  const handleUpdateConstraints = (field, cons) => {
     let newConst = {};
-    if(!constraints && cons){
+    if (!constraints && cons) {
       newConst[`${field}`] = cons;
       setConstrObj(newConst);
       setUpdateIsValid(true);
-    }
-    else{
-      //for (const [key,value] of Object.entries(constraints)){
-      //  newConst[`${key}`] = [...value];
-      //}
-      for (const [key,value] of Object.entries(constrObj)){
+    } else {
+      for (const [key, value] of Object.entries(constrObj)) {
         newConst[`${key}`] = [...value];
       }
       newConst[`${field}`] = cons;
       setConstrObj(newConst);
-      if (JSON.stringify(newConst[`${field}`]) === JSON.stringify(cons)){
+      
+      const constraintsAreEqual =
+        JSON.stringify(newConst[`${field}`]) ===
+        JSON.stringify(constraints[`${field}`]);
+      const newConstraintEmpty =
+        newConst[`${field}`].length === 0 ||
+        (newConst[`${field}`].length === 1 && newConst[`${field}`][0] === "");
+      const constraintExistsinDB = constraints[`${field}`];
+      if (
+        constraintsAreEqual ||
+        (newConstraintEmpty && !constraintExistsinDB)
+      ) {
         return;
       }
       setUpdateIsValid(true);
     }
-  }
+  };
 
-  let constr = [
-    ["status"],
-    ["requerente"],
-    ["prioridade"],
-    ["tipo"],
-  ];
+  let constr = [["status"], ["requerente"], ["prioridade"], ["tipo"]];
 
   useEffect(() => {
-    if(constraints) {
+    if (constraints) {
       for (const [key, value] of Object.entries(constraints)) {
-        if( key!=="ultima_atualizacao" && key!=="log" && value){
-          constr.forEach((element)=>{
-            if(element[0]===key){
+        if (key !== "ultima_atualizacao" && key !== "log" && value) {
+          constr.forEach((element) => {
+            if (element[0] === key) {
               value.forEach((el) => {
-                element.push(el)
+                element.push(el);
               });
             }
           });
@@ -109,7 +116,11 @@ const Constraints = () => {
           );
         })}
       </section>
-      <Button disabled={!updateIsValid} onClick={submitHandler} className={classes.button_add}>
+      <Button
+        disabled={!updateIsValid}
+        onClick={submitHandler}
+        className={classes.button_add}
+      >
         Salvar Alterações
       </Button>
     </Card>
