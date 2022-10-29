@@ -42,8 +42,25 @@
 }
 
 .details{
+  cursor:pointer;
   color:white;
   font:bold;
   font-family: inherit;
   font-size: large;
+}
+
+.button_details{
+  max-width: 0rem;
+  display: inline;
+  background-color: transparent;
+  cursor:pointer;
+  margin-left: 0.5rem;
+  border:0;
+  font-size: 24px;
+  color: #dd0db0;
+}
+
+.button_details:after{
+  content: '\1F50D \FE0E';
+  vertical-align: baseline;
 }

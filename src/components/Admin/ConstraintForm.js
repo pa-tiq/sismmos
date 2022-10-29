@@ -71,7 +71,7 @@ const ConstraintForm = (props) => {
       <thead className={classes.table_header}>
         <tr className={classes.table_row}>
           <th className={classes.table_header}>
-            {props.field}
+            {props.field.toUpperCase()}
             <button
               className={classes.button_remove}
               onClick={deleteRowHandler}
