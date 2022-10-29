@@ -1,4 +1,4 @@
-.main-header {
+.main_header {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,12 +12,12 @@
   z-index: 1; /*tive que colocar isso para o header ficar na frente do NavigationSide*/
 }
 
-.main-header h1 {
+.main_header h1 {
   color: black;
 }
 
-.main-header h1:hover,
-.main-header h1:active {
+.main_header h1:hover,
+.main_header h1:active {
   color: #87169d;
   cursor: pointer;
 }

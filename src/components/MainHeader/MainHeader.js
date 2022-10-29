@@ -9,7 +9,7 @@ const MainHeader = (props) => {
   };
 
   return (
-    <header className={classes['main-header']}>
+    <header className={classes.main_header}>
       <h1 id={props.views[0]} onClick={viewChangeHandler}>SisMMOS</h1>
       <NavigationTop views={props.views} onChangeView={props.onChangeView}/>
     </header>
