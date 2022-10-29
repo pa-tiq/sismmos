@@ -6,7 +6,7 @@ import ConstraintForm from "./ConstraintForm";
 
 const Constraints = () => {
   const orderContext = useContext(OrderContext);
-  const { constraints: constraints } = orderContext.constraints;
+  const { constraints: constraints } = orderContext;
   const [constrArr, setConstrArr] = useState([]);
   const [constrObj, setConstrObj] = useState({});
   const [updateIsValid, setUpdateIsValid] = useState(false);
@@ -19,14 +19,35 @@ const Constraints = () => {
     let year = date.getFullYear();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    let zero = ''
+    let zero = '';
     if (minutes < 10) zero = '0';
     let currentDate = `${day}/${month}/${year} ${hours}:${zero}${minutes}`;
     constrObj.ultima_atualizacao = currentDate;
-    orderContext.updateConstraints(constrObj);
+    if(!constraints || Object.keys(constraints).length === 0){
+      orderContext.putConstraints(constrObj);
+    }
+    else{
+      orderContext.updateConstraints(constrObj);
+    }
+    setUpdateIsValid(false)
   };
 
-  const handleUpdateConstraints = (field,cons) => {    
+  useEffect(()=>{
+    let valid = false;
+    for (const [value] of Object.values(constrObj)){
+      if(value) valid = true;
+    }
+    if(constraints){
+      for (const [key,value] of Object.entries(constraints)){
+        if(key!=="ultima_atualizacao" && key!=="log" && value){
+          valid = JSON.stringify(value) !== JSON.stringify(constrObj[key]);
+        }
+      }
+    }
+    setUpdateIsValid(valid);
+  },[constrObj,constraints]);
+
+  const handleUpdateConstraints = (field,cons) => {  
     let newConst = {};
     if(!constraints && cons){
       newConst[`${field}`] = cons;
@@ -34,41 +55,44 @@ const Constraints = () => {
       setUpdateIsValid(true);
     }
     else{
-      for (const [key,value] of Object.keys(constraints)){
+      //for (const [key,value] of Object.entries(constraints)){
+      //  newConst[`${key}`] = [...value];
+      //}
+      for (const [key,value] of Object.entries(constrObj)){
         newConst[`${key}`] = [...value];
-      }
-      if (JSON.stringify(newConst[`${field}`]) === JSON.stringify(cons)){
-        return;
       }
       newConst[`${field}`] = cons;
       setConstrObj(newConst);
+      if (JSON.stringify(newConst[`${field}`]) === JSON.stringify(cons)){
+        return;
+      }
       setUpdateIsValid(true);
     }
   }
 
-  let constr = [];
+  let constr = [
+    ["status"],
+    ["requerente"],
+    ["prioridade"],
+    ["tipo"],
+  ];
+
   useEffect(() => {
-    if (!constraints) {
-      constr = [
-        ["status"],
-        ["requerente"],
-        ["prioridade"],
-        ["tipo"],
-      ];
-    } else {
-      let index = 0;
+    if(constraints) {
       for (const [key, value] of Object.entries(constraints)) {
-        if( key!=="ultima_atualizacao" && key!=="log"){
-          constr[index].push(key);
-          value.forEach((element) => {
-            constr[index].push(element);
+        if( key!=="ultima_atualizacao" && key!=="log" && value){
+          constr.forEach((element)=>{
+            if(element[0]===key){
+              value.forEach((el) => {
+                element.push(el)
+              });
+            }
           });
-          index++;
         }
       }
     }
     setConstrArr(constr);
-  }, [constraints]);
+  }, []);
 
   return (
     <Fragment>

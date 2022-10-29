@@ -152,9 +152,13 @@ const OrderProvider = (props) => {
 
   const putConstraintsHandler = async (constraints) => {
     const log = [
-      `Log da restrições de dados: `,
+      `Log das restrições de dados: `,
       `Criado em ${constraints.ultima_atualizacao} `,
     ];
+    for (const [key, value] of Object.entries(constraints)) {
+      if (key !== "ultima_atualizacao" && value.length !== 0)
+        log.push(`${key}:${JSON.stringify(value)}`);
+    }
     constraints.log = log;
     const postConfig = {
       url: "https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json",
@@ -165,7 +169,8 @@ const OrderProvider = (props) => {
       },
     };
     const createTask = (constraintsData) => {
-      const loadedOrder = {
+      console.log(constraintsData);
+      const loadedConstraints = {
         status: constraintsData.status,
         ultima_atualizacao: constraintsData.ultima_atualizacao,
         requerente: constraintsData.requerente,
@@ -173,7 +178,7 @@ const OrderProvider = (props) => {
         tipo: constraintsData.tipo,
         log: constraintsData.log,
       };
-      setConstraints(loadedOrder);
+      setConstraints(loadedConstraints);
     };
     httpObj.sendRequest(postConfig, createTask);
   };
@@ -192,10 +197,10 @@ const OrderProvider = (props) => {
     };
     let logNovo = [...constraints.log];
     for (const [key, value] of Object.entries(diff)) {
-      if (!value) {
-        const msg = `[${newConst.ultima_atualizacao}] ${key}: "${JSON.stringify(
-          constraints[key]
-        )}" → "${JSON.stringify(newConst[key])}" `;
+      if (!value && newConst[key] && newConst[key].length !== 0) {
+        const msg = `[${newConst.ultima_atualizacao}] ${key}: ${
+          constraints[key] ? JSON.stringify(constraints[key]) : "[ ]"
+        } → ${JSON.stringify(newConst[key])}`;
         logNovo.push(msg);
       }
     }
@@ -228,10 +233,9 @@ const OrderProvider = (props) => {
     };
     const updateConstraints = (constraints) => {
       let loadedConstraints = {};
-      if(!constraints){
-        loadedConstraints = {}
-      }
-      else{
+      if (!constraints) {
+        loadedConstraints = {};
+      } else {
         loadedConstraints = {
           status: constraints.status,
           requerente: constraints.requerente,
@@ -248,7 +252,7 @@ const OrderProvider = (props) => {
 
   useEffect(() => {
     fetchOrdersHandler();
-    fetchConstraintsHandler();    
+    fetchConstraintsHandler();
   }, []); //this only runs once - when the app starts
 
   return (

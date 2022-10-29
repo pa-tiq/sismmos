@@ -14,9 +14,7 @@ const ConstraintForm = (props) => {
   const inputForm = useRef(null);
 
   useEffect(() => {
-    if(JSON.stringify(constraints) !== JSON.stringify(props.constraints)){
-      props.updateConstraints(props.field,constraints);
-    }
+    props.updateConstraints(props.field,constraints);
   },[constraints])
 
   useEffect(() => {
@@ -53,7 +51,7 @@ const ConstraintForm = (props) => {
   }
   
   const addRowHandler = () => {
-    const newcon = [...constraints];
+    let newcon = [...constraints];
     if(newcon.length !== 0){
       if (newcon[newcon.length-1] === '') return;
     }
@@ -62,7 +60,7 @@ const ConstraintForm = (props) => {
   }
 
   const deleteRowHandler = () => {
-    const newcon = [...constraints];
+    let newcon = [...constraints];
     if(newcon.length === 0) return;
     newcon.pop();
     setConstraints(newcon);
