@@ -108,6 +108,10 @@ const OrderProvider = (props) => {
       `Log do objeto ${orderID}: "${order.material}" `,
       `Criado em ${order.ultima_atualizacao} `,
     ];
+    for (const [key, value] of Object.entries(order)) {
+      if (key !== "ultima_atualizacao" && value.length !== 0)
+        log.push(`${key}:${JSON.stringify(value)}`);
+    }
     order.log = log;
     const postConfig = {
       url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",

@@ -1,11 +1,6 @@
 import React, { useState, Fragment, useRef, useEffect } from "react";
 import classes from "./ConstraintForm.module.css";
 
-const DUMMY = [
-  'OI',
-  'FDP',
-]
-
 const ConstraintForm = (props) => {
 
   const [constraints, setConstraints] = useState(props.constraints);
