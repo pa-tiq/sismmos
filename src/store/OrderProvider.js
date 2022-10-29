@@ -226,7 +226,7 @@ const OrderProvider = (props) => {
       },
     };
     const createTask = () => {
-      setConstraints(newConst);
+      fetchConstraintsHandler();
     };
     httpObj.sendRequest(updateConfig, createTask);
   };
