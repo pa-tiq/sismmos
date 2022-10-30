@@ -14,6 +14,7 @@
   max-width: inherit;
   font-size: large;  
   color: white;
+  overflow: auto;
 }
 
 .table_header {
@@ -47,8 +48,8 @@
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 25px;
-  width: fit-content;
-  max-width: inherit;
+  width: min-content;
+  max-width: min-content;
 }
 
 .button{

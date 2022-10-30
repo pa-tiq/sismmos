@@ -1,17 +1,17 @@
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.title{
+.title {
   align-self: center;
   text-emphasis-color: white;
   outline: white;
   color: white;
 }
 
-.button_add{
+.button_add {
   font: inherit;
   background: #dd0db0;
   border: 1px solid #dd0db0;
@@ -22,37 +22,39 @@
   border-radius: 20px;
 }
 
-.search_and_filters{
+.search_and_filters {
   display: flex;
+  max-width: inherit;
+  overflow-x: auto;
 }
 
-.filters{
+.filters {
   float: left;
-  margin-left:1%;
+  margin-left: 1rem;
   padding: 1.3rem;
   width: 100%;
   text-align: justify;
-  vertical-align: middle;
   color: white;
 }
 
-.search{
-  float:left;
-  padding-left:0.8rem;
-  padding-right:0.8rem;
-  padding-top:0.2rem;
-  padding-bottom:0.2rem;
+.search {
+  float: left;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
   max-width: 30rem;
 }
 
-.searchInput{
+.searchInput {
   margin-left: 1rem;
   margin-right: 1rem;
-  color:white;
+  color: white;
 }
 
-.table_card{
+.table_card {
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
-

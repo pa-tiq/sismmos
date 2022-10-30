@@ -1,7 +1,7 @@
 .sidebar {
   float: left;
   padding: 0;
-  max-width: 9rem;
+  max-width: fit-content;
   width: 100%;
   margin-right: 0.5%;
   margin-bottom: 2%;
@@ -10,7 +10,7 @@
 
 .home {
   float: left;
-  margin-left:1%;
+  margin-top: 0.1rem;
   margin-right:1%;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -23,7 +23,7 @@
 
 .homepage {
   background-color: #464546;
-  display: flex;
+  display: block;
   margin-top: -1rem;
   margin-left: 1rem;
   margin-right: 1rem;

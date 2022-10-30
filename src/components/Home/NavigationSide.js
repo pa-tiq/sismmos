@@ -12,7 +12,7 @@ const NavigationSide = (props) => {
       <ul>
         <li>
           <button id={props.views[0]} onClick={viewChangeHandler}>
-            Home
+            Dashboard
           </button>
         </li>
         <li>

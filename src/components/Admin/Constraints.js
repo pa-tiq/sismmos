@@ -38,21 +38,6 @@ const Constraints = () => {
     setUpdateIsValid(false);
   };
 
-  //useEffect(()=>{
-  //  let valid = false;
-  //  for (const [value] of Object.values(constrObj)){
-  //    if(value) valid = true;
-  //  }
-  //  if(constraints){
-  //    for (const [key,value] of Object.entries(constraints)){
-  //      if(key!=="ultima_atualizacao" && key!=="log" && value){
-  //        valid = JSON.stringify(value) !== JSON.stringify(constrObj[key]);
-  //      }
-  //    }
-  //  }
-  //  setUpdateIsValid(valid);
-  //},[constrObj,constraints]);
-
   const handleUpdateConstraints = (field, cons) => {
     let newConst = {};
     if (!constraints && cons) {

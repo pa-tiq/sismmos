@@ -9,7 +9,7 @@ const Dashboard = () => {
   return (
     <section className={classes.dashboard}>
       <div className={classes.header}>
-        <h1 className={classes.title}>{`Oi caralhudo, vc tem ${
+        <h1 className={classes.title}>{`Oi lindão, vc tem ${
           orderContext.orderID - 1
         } ordens de serviço cadastradas`}</h1>
       </div>
