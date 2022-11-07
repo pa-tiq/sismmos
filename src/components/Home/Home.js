@@ -8,16 +8,16 @@ import Dashboard from "../Dashboard/Dashbard";
 const Home = () => {
 
   const views = [ "dashboard", "ordens" ];
-  const [activeView, setActiveView] = useState(views[0]);
+  const [activeView, setActiveView] = useState(views[1]);
   const changeViewHandler = (selectedView) => {
     setActiveView(selectedView);
   };
 
   return (
     <section className={classes.homepage}>
-      <div className={classes.sidebar}>
+      {/* <div className={classes.sidebar}>
         <NavigationSide views={views} onChangeView={changeViewHandler}/>
-      </div>
+      </div> */}
       <Card className={classes.home}>
         {activeView === views[0] && <Dashboard/>}
         {activeView === views[1] && <Orders/>}
