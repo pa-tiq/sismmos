@@ -78,9 +78,11 @@ const OrderProvider = (props) => {
 
   const fetchOrdersHandler = async () => {
     const requestConfig = {
-      url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
+      //url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
+      url: "http://localhost:8080/orders/orders",
     };
-    const updateOrders = (newOrders) => {
+    const updateOrders = (response) => {
+      const newOrders = response.orders;
       const loadedOrders = [];
       let index = 1;
       for (const orderKey in newOrders) {
@@ -116,7 +118,8 @@ const OrderProvider = (props) => {
     log.push(lognew);
     order.log = log;
     const postConfig = {
-      url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
+      //url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
+      url: "http://localhost:8080/orders/order",
       method: "POST",
       body: order,
       headers: {
@@ -124,9 +127,10 @@ const OrderProvider = (props) => {
       },
     };
     const createTask = (orderData) => {
-      const generatedId = orderData.name; //firebase-specific: "name" contains generated id
+      console.log(orderData);
+      //const generatedId = orderData.name; //firebase-specific: "name" contains generated id
       const loadedOrder = {
-        id: generatedId,
+        id: 1,
         status: order.status,
         ultima_atualizacao: order.ultima_atualizacao,
         material: order.material,

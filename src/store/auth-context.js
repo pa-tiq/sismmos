@@ -8,6 +8,7 @@ const AuthContext = React.createContext({
 
 export const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     const storedUserLoginInfo = localStorage.getItem("isLoggedIn");
@@ -16,8 +17,9 @@ export const AuthContextProvider = (props) => {
     }
   }, []); //this only runs once - when the app starts
 
-  const loginHandler = () => {
+  const loginHandler = (email, password) => {
     localStorage.setItem("isLoggedIn", "1");
+    setEmail(email);
     setIsLoggedIn(true);
   };
 
@@ -30,6 +32,7 @@ export const AuthContextProvider = (props) => {
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
+        email: email,
         onLogin: loginHandler,
         onLogout: logoutHandler,
       }}

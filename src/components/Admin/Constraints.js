@@ -1,15 +1,9 @@
-import React, {
-  useState,
-  useContext,
-  useRef,
-  useEffect,
-  Fragment,
-} from "react";
-import classes from "./Constraints.module.css";
-import OrderContext from "../../store/order-context";
-import Button from "../UI/Button/Button";
-import ConstraintForm from "./ConstraintForm";
-import Card from "../UI/Card/Card";
+import React, { useState, useContext, useEffect } from 'react';
+import classes from './Constraints.module.css';
+import OrderContext from '../../store/order-context';
+import Button from '../UI/Button/Button';
+import ConstraintForm from './ConstraintForm';
+import Card from '../UI/Card/Card';
 
 const Constraints = () => {
   const orderContext = useContext(OrderContext);
@@ -26,8 +20,8 @@ const Constraints = () => {
     let year = date.getFullYear();
     let hours = date.getHours();
     let minutes = date.getMinutes();
-    let zero = "";
-    if (minutes < 10) zero = "0";
+    let zero = '';
+    if (minutes < 10) zero = '0';
     let currentDate = `${day}/${month}/${year} ${hours}:${zero}${minutes}`;
     constrObj.ultima_atualizacao = currentDate;
     if (!constraints || Object.keys(constraints).length === 0) {
@@ -50,30 +44,26 @@ const Constraints = () => {
       }
       newConst[`${field}`] = cons;
       setConstrObj(newConst);
-      
+
       const constraintsAreEqual =
-        JSON.stringify(newConst[`${field}`]) ===
-        JSON.stringify(constraints[`${field}`]);
+        JSON.stringify(newConst[`${field}`]) === JSON.stringify(constraints[`${field}`]);
       const newConstraintEmpty =
         newConst[`${field}`].length === 0 ||
-        (newConst[`${field}`].length === 1 && newConst[`${field}`][0] === "");
+        (newConst[`${field}`].length === 1 && newConst[`${field}`][0] === '');
       const constraintExistsinDB = constraints[`${field}`];
-      if (
-        constraintsAreEqual ||
-        (newConstraintEmpty && !constraintExistsinDB)
-      ) {
+      if (constraintsAreEqual || (newConstraintEmpty && !constraintExistsinDB)) {
         return;
       }
       setUpdateIsValid(true);
     }
   };
 
-  let constr = [["status"], ["requerente"], ["prioridade"], ["tipo"]];
+  let constr = [['status'], ['requerente'], ['prioridade'], ['tipo']];
 
   useEffect(() => {
     if (constraints) {
       for (const [key, value] of Object.entries(constraints)) {
-        if (key !== "ultima_atualizacao" && key !== "log" && value) {
+        if (key !== 'ultima_atualizacao' && key !== 'log' && value) {
           constr.forEach((element) => {
             if (element[0] === key) {
               value.forEach((el) => {
