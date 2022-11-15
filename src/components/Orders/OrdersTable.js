@@ -7,9 +7,9 @@ const HEADERS = [
   ["ID", "idx"],
   ["Material", "material"],
   ["Requerente", "requerente"],
-  ["Status", "status"],
   ["Prioridade", "prioridade"],
   ["Tipo", "tipo"],
+  ["Status", "status"],
   ["Última Atualização", "ultima_atualizacao"],
 ];
 
@@ -66,7 +66,7 @@ const OrdersTable = (props) => {
                 <th
                   className={classes.table_header}
                   key={`header_${index}_${title[1]}`}
-                  id={`header_${index}_${title[1]}`}
+                  id= {title[1]}
                 >
                   {header}
                 </th>

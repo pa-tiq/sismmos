@@ -56,9 +56,9 @@ const OrderItem = (props) => {
         <td className={classes.table_data}>{order.idx}</td>
         <td className={classes.table_data}>{order.material}</td>
         <td className={classes.table_data}>{order.requerente}</td>
-        <td className={classes.table_data}>{order.status}</td>
         <td className={classes.table_data}>{order.prioridade}</td>
         <td className={classes.table_data}>{order.tipo}</td>
+        <td className={classes.table_data}>{order.status}</td>
         <td className={classes.table_data}>{order.ultima_atualizacao}</td>
         <td className={classes.table_button}>
           <button className={classes.details} onClick={showLogHandler} />
