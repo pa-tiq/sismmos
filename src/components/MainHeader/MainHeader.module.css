@@ -21,10 +21,15 @@
   cursor: pointer;
 }
 
+.header nav {
+  display: block;
+}
+
 .header ul {
   list-style: none;
   margin: 0;
-  padding: 0;
+  margin-right: -1rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
 }
@@ -49,8 +54,8 @@
 
 .header button {
   font: inherit;
-  background: #dd0db0;
-  border: 1px solid #dd0db0;
+  background: black;
+  border: 1px solid black;
   padding: 0.5rem 1.5rem;
   color: white;
   cursor: pointer;

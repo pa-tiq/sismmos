@@ -1,13 +1,12 @@
 import React, { useContext, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
-import classes from './NavigationTop.module.css';
 
 const NavigationTop = (props) => {
   const context = useContext(AuthContext);
 
   return (
-    <nav className={classes.nav}>
+    <nav>
       <ul>
         {context.isLoggedIn && (
           <Fragment>

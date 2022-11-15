@@ -18,10 +18,10 @@ const Home = () => {
       {/* <div className={classes.sidebar}>
         <NavigationSide views={views} onChangeView={changeViewHandler}/>
       </div> */}
-      <Card className={classes.home}>
+      <div className={classes.home}>
         {activeView === views[0] && <Dashboard/>}
         {activeView === views[1] && <Orders/>}
-      </Card>
+      </div>
     </section>
   );
 };
