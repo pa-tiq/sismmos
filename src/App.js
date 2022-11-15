@@ -1,30 +1,27 @@
-import React, { useContext, useState } from "react";
-import Login from "./components/Login/Login";
-import Home from "./components/Home/Home";
-import MainHeader from "./components/MainHeader/MainHeader";
-import Admin from "./components/Admin/Admin";
-import AuthContext from "./store/auth-context";
-import OrderProvider from "./store/OrderProvider";
+import React, { useContext, useState } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import Login from './components/Login/Login';
+import Home from './components/Home/Home';
+import MainHeader from './components/MainHeader/MainHeader';
+import Admin from './components/Admin/Admin';
+import AuthContext from './store/auth-context';
+import OrderProvider from './store/OrderProvider';
 
 function App() {
-
-  const authContext = useContext(AuthContext); 
-  
-  const views = [ "home", "users", "admin" ];
-  const [activeView, setActiveView] = useState(views[0]);
-  const changeViewHandler = (selectedView) => {
-    setActiveView(selectedView);
-  };
+  const authContext = useContext(AuthContext);
 
   return (
     <React.Fragment>
-      <MainHeader views={views} onChangeView={changeViewHandler}/>
+      <MainHeader />
       <main>
-        {!authContext.isLoggedIn && <Login/>}
+        {!authContext.isLoggedIn && <Login />}
         {authContext.isLoggedIn && (
           <OrderProvider>
-            {activeView === views[0] && <Home />}
-            {activeView === views[2] && <Admin />}
+            <Routes>
+              <Route path='/' element={<Navigate to='/home' />} />
+              <Route path='/home' element={<Home />} />
+              <Route path='/admin' element={<Admin />} />
+            </Routes>
           </OrderProvider>
         )}
       </main>
