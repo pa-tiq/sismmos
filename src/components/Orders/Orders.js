@@ -1,50 +1,33 @@
-import React, { useState, useEffect, Fragment, useContext } from "react";
-import classes from "./Orders.module.css";
-import Card from "../UI/Card/Card";
-import Input from "../UI/Input/Input";
-import Button from "../UI/Button/Button";
-import NewOrder from "./NewOrder";
-import OrdersTable from "./OrdersTable";
-import OrderContext from "../../store/order-context";
+import React, { useState, useEffect, Fragment, useContext } from 'react';
+import classes from './Orders.module.css';
+import Card from '../UI/Card/Card';
+import Input from '../UI/Input/Input';
+import Button from '../UI/Button/Button';
+import NewOrder from './NewOrder';
+import OrdersTable from './OrdersTable';
+import Filters from './Filters';
+import OrderContext from '../../store/order-context';
 
 const DUMMY_DATA = [
-  [
-    "1",
-    "Rádio Falcon NS43",
-    "13/03/2022",
-    "CMA",
-    "Novo",
-    "Alta",
-    "Apoio Direto",
-  ],
-  [
-    "2",
-    "Rádio Bear KNS43",
-    "13/03/2022",
-    "4CTA",
-    "Novo",
-    "Média",
-    "Apoio Direto",
-  ],
-  [
-    "3",
-    "Rádio Dog LS43",
-    "13/03/2022",
-    "3BIS",
-    "Novo",
-    "Baixa",
-    "Apoio Direto",
-  ],
+  ['1', 'Rádio Falcon NS43', '13/03/2022', 'CMA', 'Novo', 'Alta', 'Apoio Direto'],
+  ['2', 'Rádio Bear KNS43', '13/03/2022', '4CTA', 'Novo', 'Média', 'Apoio Direto'],
+  ['3', 'Rádio Dog LS43', '13/03/2022', '3BIS', 'Novo', 'Baixa', 'Apoio Direto'],
 ];
 
 const Orders = () => {
   const [searchActive, setSearchActive] = useState(false);
-  const [preSearchData, setPreSearchData] = useState(null);
+  const [filterActive, setFilterActive] = useState({
+    requerente: '',
+    prioridade: '',
+    tipo: '',
+    status: '',
+  });
+  const [preSearchData, setPreSearchData] = useState([]);
   const [visibleData, setVisibleData] = useState([]);
   const [addNewOrder, setAddNewOrder] = useState(false);
 
   const orderContext = useContext(OrderContext);
-  const { orders:orders } = orderContext;
+  const { orders: orders } = orderContext;
 
   useEffect(() => {
     setVisibleData(orders);
@@ -52,17 +35,18 @@ const Orders = () => {
 
   const searchInputChangeHandler = (e) => {
     const searchText = e.target.value;
-    if (searchText === "") {
+    if (searchText === '') {
       setSearchActive(false);
       setVisibleData(orders);
+      applyFilters();
       return;
     }
     setSearchActive(true);
     const needle = searchText.toLowerCase();
     let searchData = [];
-    orders.forEach((row) => {
+    visibleData.forEach((row) => {
       const needleFoundInRow = Object.values(row).find((element) => {
-        if (typeof(element) !== "object"){
+        if (typeof element !== 'object') {
           if (element.toLowerCase().includes(needle)) return true;
         }
       });
@@ -73,10 +57,6 @@ const Orders = () => {
     setVisibleData(searchData);
   };
 
-  const selectedChangeHandler = (e) => {
-    console.log(e.target.value);
-  };
-
   const showAddOrderHandler = () => {
     if (addNewOrder === true) setAddNewOrder(false);
     else setAddNewOrder(true);
@@ -84,37 +64,48 @@ const Orders = () => {
 
   const hideAddOrderHandler = () => {
     setAddNewOrder(false);
-  }
-  
-  const filters = (
-    <div className={classes.search_and_filters} key={'search_filters'} id={'search_filters'}>
-      <Card className={classes.search} key={'search'} id={'search'}>
-        <Input
-          className={classes.searchInput}
-          label="Pesquisa"
-          type="input"
-          id="search"
-          onChange={searchInputChangeHandler}
-        />
-      </Card>
-      <Card className={classes.filters} key={'filters'} id={'filters'}>
-        <label htmlFor="requerente">Requerente: </label>
-        <select
-          onChange={selectedChangeHandler}
-          id="requerente"
-          name="requerentes"
-          defaultValue="4CTA"
-        >
-          <option defaultValue={true} value="Todos">
-            Todos
-          </option>
-          <option value="4CTA">4CTA</option>
-          <option value="CMA">CMA</option>
-          <option value="3BIS">3BIS</option>
-        </select>
-      </Card>
-    </div>
-  );
+  };
+
+  const filterSelectChangeHandler = (column, needle) => {
+    let activeFilters = filterActive;
+    activeFilters[column] = needle;
+    if (
+      activeFilters.requerente === '' &&
+      activeFilters.prioridade === '' &&
+      activeFilters.tipo === '' &&
+      activeFilters.status === ''
+    ) {
+      setVisibleData(orders);
+    }
+    setFilterActive(activeFilters);
+    applyFilters();    
+  };
+
+  const applyFilters = () => {
+    let searchData = [];
+    let active = {
+      requerente: false,
+      prioridade: false,
+      tipo: false,
+      status: false,
+    };
+    Object.keys(filterActive).forEach((key) => {
+      if (filterActive[key] !== '') active[key] = true;
+    });
+    orders.forEach((row) => {
+      let needleFoundInRow = {};
+      Object.keys(active).forEach((key) => {
+        if (active[key]) {
+          if (row[key] === filterActive[key]) needleFoundInRow[key] = true;
+          else needleFoundInRow[key] = false;
+        }
+      });
+      if (!Object.values(needleFoundInRow).includes(false)) {
+        searchData.push(row);
+      }
+    });
+    setVisibleData(searchData);
+  };
 
   return (
     <Fragment>
@@ -124,8 +115,15 @@ const Orders = () => {
           Adicionar
         </Button>
       </div>
-      {filters}
-      <Card className={classes.table_card} key={'order_table_card'} id={'order_table_card'}>
+      <Filters
+        onSearchInputChange={searchInputChangeHandler}
+        onSelectChange={filterSelectChangeHandler}
+      />
+      <Card
+        className={classes.table_card}
+        key={'order_table_card'}
+        id={'order_table_card'}
+      >
         <OrdersTable
           orders={visibleData}
           loading={orderContext.isLoading}

@@ -31,7 +31,8 @@
 .filters {
   float: left;
   margin-left: 1rem;
-  padding: 1.3rem;
+  padding-right: 1.8rem;
+  padding-left: 0.5rem;
   width: 100%;
   text-align: justify;
   color: white;
@@ -44,6 +45,7 @@
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
   max-width: 30rem;
+  margin-right: 0.5rem
 }
 
 .searchInput {
