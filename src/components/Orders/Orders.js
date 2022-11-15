@@ -103,6 +103,7 @@ const Orders = () => {
           onChange={selectedChangeHandler}
           id="requerente"
           name="requerentes"
+          defaultValue="4CTA"
         >
           <option defaultValue={true} value="Todos">
             Todos
