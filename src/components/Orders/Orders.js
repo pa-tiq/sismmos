@@ -1,33 +1,30 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import classes from './Orders.module.css';
 import Card from '../UI/Card/Card';
-import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import NewOrder from './NewOrder';
 import OrdersTable from './OrdersTable';
 import Filters from './Filters';
 import OrderContext from '../../store/order-context';
 
-const DUMMY_DATA = [
-  ['1', 'Rádio Falcon NS43', '13/03/2022', 'CMA', 'Novo', 'Alta', 'Apoio Direto'],
-  ['2', 'Rádio Bear KNS43', '13/03/2022', '4CTA', 'Novo', 'Média', 'Apoio Direto'],
-  ['3', 'Rádio Dog LS43', '13/03/2022', '3BIS', 'Novo', 'Baixa', 'Apoio Direto'],
-];
+//const DUMMY_DATA = [
+//  ['1', 'Rádio Falcon NS43', '13/03/2022', 'CMA', 'Novo', 'Alta', 'Apoio Direto'],
+//  ['2', 'Rádio Bear KNS43', '13/03/2022', '4CTA', 'Novo', 'Média', 'Apoio Direto'],
+//  ['3', 'Rádio Dog LS43', '13/03/2022', '3BIS', 'Novo', 'Baixa', 'Apoio Direto'],
+//];
 
 const Orders = () => {
-  const [searchActive, setSearchActive] = useState(false);
   const [filterActive, setFilterActive] = useState({
     requerente: '',
     prioridade: '',
     tipo: '',
     status: '',
   });
-  const [preSearchData, setPreSearchData] = useState([]);
   const [visibleData, setVisibleData] = useState([]);
   const [addNewOrder, setAddNewOrder] = useState(false);
 
   const orderContext = useContext(OrderContext);
-  const { orders: orders } = orderContext;
+  const { orders } = orderContext;
 
   useEffect(() => {
     setVisibleData(orders);
@@ -36,12 +33,10 @@ const Orders = () => {
   const searchInputChangeHandler = (e) => {
     const searchText = e.target.value;
     if (searchText === '') {
-      setSearchActive(false);
       setVisibleData(orders);
       applyFilters();
       return;
     }
-    setSearchActive(true);
     const needle = searchText.toLowerCase();
     let searchData = [];
     visibleData.forEach((row) => {
@@ -49,6 +44,7 @@ const Orders = () => {
         if (typeof element !== 'object') {
           if (element.toLowerCase().includes(needle)) return true;
         }
+        return false
       });
       if (needleFoundInRow) {
         searchData.push(row);

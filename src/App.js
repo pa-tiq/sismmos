@@ -1,4 +1,4 @@
-import React, { useContext, Suspense, Fragment } from 'react';
+import React, { useContext, Suspense } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Layout from './components/MainHeader/Layout';
 import AuthContext from './store/auth-context';

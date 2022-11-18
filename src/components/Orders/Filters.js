@@ -7,7 +7,7 @@ import OrderContext from '../../store/order-context';
 
 const Filters = (props) => {
   const orderContext = useContext(OrderContext);
-  const { orders: orders } = orderContext;
+  const { orders } = orderContext;
   const [values, setValues] = useState({
     requerente: [''],
     prioridade: [''],
@@ -22,7 +22,7 @@ const Filters = (props) => {
       tipo: [''],
       status: [''],
     }
-    orders.map((order)=>{
+    orders.forEach((order)=>{
       if(!allvalues.requerente.slice(1).includes(order.requerente)) allvalues.requerente.push(order.requerente);
       if(!allvalues.prioridade.slice(1).includes(order.prioridade)) allvalues.prioridade.push(order.prioridade);
       if(!allvalues.tipo.slice(1).includes(order.tipo)) allvalues.tipo.push(order.tipo);
