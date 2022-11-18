@@ -13,6 +13,7 @@ const Select = (props) => {
         onChange={props.onChange}
         ref={props.reff}
         key={`select_${props.label}`}
+        defaultValue={props.editMode ? props.oldValue : undefined }
       >
         {props.options.map((option, idx) => {
           return (

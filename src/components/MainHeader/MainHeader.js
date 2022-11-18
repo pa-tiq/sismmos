@@ -1,17 +1,49 @@
-import React from 'react';
-import NavigationTop from './NavigationTop';
+import React, { useContext, Fragment } from 'react';
+import { NavLink } from 'react-router-dom';
+import AuthContext from '../../store/auth-context';
 import classes from './MainHeader.module.css';
 
-const MainHeader = (props) => {
-
-  const viewChangeHandler = (event) => {
-    props.onChangeView(event.target.id);
-  };
+const MainHeader = () => {
+  const context = useContext(AuthContext);
 
   return (
-    <header className={classes.main_header}>
-      <h1 id={props.views[0]} onClick={viewChangeHandler}>SisMMOS</h1>
-      <NavigationTop views={props.views} onChangeView={props.onChangeView}/>
+    <header className={classes.header}>
+      <h1>SisMMOS</h1>
+      <nav>
+        <ul>
+          {context.isLoggedIn && (
+            <Fragment>
+              <li>
+                <NavLink
+                  className={({ isActive }) => (isActive ? classes.active : undefined)}
+                  to='/home'
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) => (isActive ? classes.active : undefined)}
+                  to='/users'
+                >
+                  Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) => (isActive ? classes.active : undefined)}
+                  to='/admin'
+                >
+                  Admin
+                </NavLink>
+              </li>
+              <li>
+                <button onClick={context.onLogout}>Logout</button>
+              </li>
+            </Fragment>
+          )}
+        </ul>
+      </nav>
     </header>
   );
 };

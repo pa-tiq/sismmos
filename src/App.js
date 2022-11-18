@@ -1,34 +1,40 @@
-import React, { useContext, useState } from "react";
-import Login from "./components/Login/Login";
-import Home from "./components/Home/Home";
-import MainHeader from "./components/MainHeader/MainHeader";
-import Admin from "./components/Admin/Admin";
-import AuthContext from "./store/auth-context";
-import OrderProvider from "./store/OrderProvider";
+import React, { useContext, Suspense } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import Layout from './components/MainHeader/Layout';
+import AuthContext from './store/auth-context';
+import OrderProvider from './store/OrderProvider';
+import LoadingSpinner from './components/UI/LoadingSpinner/LoadingSpinner';
+
+const Login = React.lazy(() => import('./components/Login/Login'));
+const Home = React.lazy(() => import('./components/Home/Home'));
+const Admin = React.lazy(() => import('./components/Admin/Admin'));
 
 function App() {
-
-  const authContext = useContext(AuthContext); 
-  
-  const views = [ "home", "users", "admin" ];
-  const [activeView, setActiveView] = useState(views[0]);
-  const changeViewHandler = (selectedView) => {
-    setActiveView(selectedView);
-  };
+  const authContext = useContext(AuthContext);
 
   return (
-    <React.Fragment>
-      <MainHeader views={views} onChangeView={changeViewHandler}/>
-      <main>
-        {!authContext.isLoggedIn && <Login/>}
-        {authContext.isLoggedIn && (
-          <OrderProvider>
-            {activeView === views[0] && <Home />}
-            {activeView === views[2] && <Admin />}
-          </OrderProvider>
-        )}
-      </main>
-    </React.Fragment>
+    <Layout>
+      <Suspense
+        fallback={
+          <div className='centered'>
+            <LoadingSpinner />
+          </div>
+        }
+      >
+        <main>
+          {!authContext.isLoggedIn && <Login />}
+          {authContext.isLoggedIn && (
+            <OrderProvider>
+              <Routes>
+                <Route path='/' element={<Navigate to='/home' />} />
+                <Route path='/home' element={<Home />} />
+                <Route path='/admin' element={<Admin />} />
+              </Routes>
+            </OrderProvider>
+          )}
+        </main>
+      </Suspense>
+    </Layout>
   );
 }
 
