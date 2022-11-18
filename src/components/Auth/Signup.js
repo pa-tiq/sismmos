@@ -113,7 +113,7 @@ const Login = () => {
       //  emailInputRef.current.focus();
       //  return;
       //}
-      //authContext.onSignup(emailState.value, userState.value, passwordState.value);
+      authContext.onSignup(emailState.value, userState.value, passwordState.value);
       setEmailTouched(false);
       setPasswordTouched(false);
     } else if (!emailIsValid) {
