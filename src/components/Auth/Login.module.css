@@ -5,6 +5,10 @@
   padding: 2rem;
 }
 
+p{
+  color: red;
+}
+
 .actions {
   text-align: center;
 }

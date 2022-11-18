@@ -11,7 +11,7 @@ const MainHeader = () => {
       <h1>SisMMOS</h1>
       <nav>
         <ul>
-          {context.isLoggedIn && (
+          {context.isLoggedIn ? (
             <Fragment>
               <li>
                 <NavLink
@@ -41,6 +41,25 @@ const MainHeader = () => {
                 <button onClick={context.onLogout}>Logout</button>
               </li>
             </Fragment>
+          ) : (
+            <Fragment>
+            <li>
+              <NavLink
+                className={({ isActive }) => (isActive ? classes.active : undefined)}
+                to='/login'
+              >
+                Login
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className={({ isActive }) => (isActive ? classes.active : undefined)}
+                to='/signup'
+              >
+                Cadastrar
+              </NavLink>
+            </li>
+          </Fragment>
           )}
         </ul>
       </nav>

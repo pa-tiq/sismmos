@@ -4,8 +4,9 @@ import Layout from './components/MainHeader/Layout';
 import AuthContext from './store/auth-context';
 import OrderProvider from './store/OrderProvider';
 import LoadingSpinner from './components/UI/LoadingSpinner/LoadingSpinner';
+import Login from './components/Auth/Login';
 
-const Login = React.lazy(() => import('./components/Login/Login'));
+const Signup = React.lazy(() => import('./components/Auth/Signup'));
 const Home = React.lazy(() => import('./components/Home/Home'));
 const Admin = React.lazy(() => import('./components/Admin/Admin'));
 
@@ -22,8 +23,13 @@ function App() {
         }
       >
         <main>
-          {!authContext.isLoggedIn && <Login />}
-          {authContext.isLoggedIn && (
+          {!authContext.isLoggedIn ? (
+          <Routes>
+            <Route path='/' element={<Navigate to='/login' />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
+          </Routes>
+          ) : (
             <OrderProvider>
               <Routes>
                 <Route path='/' element={<Navigate to='/home' />} />

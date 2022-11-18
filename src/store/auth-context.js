@@ -26,6 +26,10 @@ export const AuthContextProvider = (props) => {
   const logoutHandler = () => {
     localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
+  };  
+  
+  const signupHandler = () => {
+    
   };
 
   return (
@@ -35,6 +39,7 @@ export const AuthContextProvider = (props) => {
         email: email,
         onLogin: loginHandler,
         onLogout: logoutHandler,
+        onSignup: signupHandler
       }}
     >
       {props.children}
