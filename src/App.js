@@ -1,17 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, Suspense } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import Login from './components/Login/Login';
-import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
-import Admin from './components/Admin/Admin';
 import AuthContext from './store/auth-context';
 import OrderProvider from './store/OrderProvider';
+import LoadingSpinner from './components/UI/LoadingSpinner/LoadingSpinner'
+
+const Login = React.lazy(() => import('./components/Login/Login'));
+const Home = React.lazy(() => import('./components/Home/Home'));
+const Admin = React.lazy(() => import('./components/Admin/Admin'));
 
 function App() {
   const authContext = useContext(AuthContext);
 
   return (
-    <React.Fragment>
+    <Suspense fallback={<LoadingSpinner/>}>
       <MainHeader />
       <main>
         {!authContext.isLoggedIn && <Login />}
@@ -25,7 +27,7 @@ function App() {
           </OrderProvider>
         )}
       </main>
-    </React.Fragment>
+    </Suspense>
   );
 }
 
