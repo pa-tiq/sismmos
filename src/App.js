@@ -1,9 +1,9 @@
-import React, { useContext, Suspense } from 'react';
+import React, { useContext, Suspense, Fragment } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import MainHeader from './components/MainHeader/MainHeader';
+import Layout from './components/MainHeader/Layout';
 import AuthContext from './store/auth-context';
 import OrderProvider from './store/OrderProvider';
-import LoadingSpinner from './components/UI/LoadingSpinner/LoadingSpinner'
+import LoadingSpinner from './components/UI/LoadingSpinner/LoadingSpinner';
 
 const Login = React.lazy(() => import('./components/Login/Login'));
 const Home = React.lazy(() => import('./components/Home/Home'));
@@ -13,21 +13,28 @@ function App() {
   const authContext = useContext(AuthContext);
 
   return (
-    <Suspense fallback={<LoadingSpinner/>}>
-      <MainHeader />
-      <main>
-        {!authContext.isLoggedIn && <Login />}
-        {authContext.isLoggedIn && (
-          <OrderProvider>
-            <Routes>
-              <Route path='/' element={<Navigate to='/home' />} />
-              <Route path='/home' element={<Home />} />
-              <Route path='/admin' element={<Admin />} />
-            </Routes>
-          </OrderProvider>
-        )}
-      </main>
-    </Suspense>
+    <Layout>
+      <Suspense
+        fallback={
+          <div className='centered'>
+            <LoadingSpinner />
+          </div>
+        }
+      >
+        <main>
+          {!authContext.isLoggedIn && <Login />}
+          {authContext.isLoggedIn && (
+            <OrderProvider>
+              <Routes>
+                <Route path='/' element={<Navigate to='/home' />} />
+                <Route path='/home' element={<Home />} />
+                <Route path='/admin' element={<Admin />} />
+              </Routes>
+            </OrderProvider>
+          )}
+        </main>
+      </Suspense>
+    </Layout>
   );
 }
 

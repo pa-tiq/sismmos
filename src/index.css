@@ -13,6 +13,15 @@ body {
   margin: 0;
 }
 
+.centered {
+  margin: 6rem auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 main {
   margin-top: 6rem;
 }
