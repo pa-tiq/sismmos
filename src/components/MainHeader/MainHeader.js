@@ -6,6 +6,10 @@ import classes from './MainHeader.module.css';
 const MainHeader = () => {
   const context = useContext(AuthContext);
 
+  const logoutHandler = () => {
+    context.onLogout();
+  }
+
   return (
     <header className={classes.header}>
       <h1>SisMMOS</h1>
@@ -38,7 +42,12 @@ const MainHeader = () => {
                 </NavLink>
               </li>
               <li>
-                <button onClick={context.onLogout}>Logout</button>
+              <NavLink
+                  className={classes.button}
+                  to='/' onClick={logoutHandler}
+                >
+                  Logout
+                </NavLink>
               </li>
             </Fragment>
           ) : (
