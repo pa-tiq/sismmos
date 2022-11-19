@@ -201,7 +201,7 @@ const Login = () => {
         <ConfirmationForm
           onHide={hideErrorConfirmationHandler}
           message={'Erro na criação de usuário'}
-          message_secondary={authContext.error}
+          message_secondary={error}
           button_text={'Ok'}
           submitHandler={hideErrorConfirmationHandler}
         />

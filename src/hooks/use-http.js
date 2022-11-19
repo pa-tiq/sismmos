@@ -19,6 +19,16 @@ const useHttp = () => {
             "Esse e-mail já está sendo usado."
           );
         }
+        if (response.status === 401) {
+          throw new Error(
+            "Senha errada."
+          );
+        }        
+        if (response.status === 404) {
+          throw new Error(
+            "Não tem nenhum usuário cadastrado com esse e-mail."
+          );
+        }
         throw new Error('Request failed!');
       }
       const data = await response.json();
