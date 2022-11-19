@@ -99,7 +99,6 @@ export const AuthContextProvider = (props) => {
       },
     };
     const createTask = (response) => {
-      console.log('resposta: ', response);
     };
     httpObj.sendRequest(putConfig, createTask);
   };
