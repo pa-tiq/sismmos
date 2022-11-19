@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import useHttp from '../hooks/use-http';
 
 const AuthContext = React.createContext({
+  isLoading: false,
+  error: null,
   isLoggedIn: false,
   onLogin: (email, password) => {},
   onLogout: () => {},
@@ -9,7 +11,7 @@ const AuthContext = React.createContext({
 
 export const AuthContextProvider = (props) => {
   const httpObj = useHttp();
-  const [users, setUsers] = useState([]);
+  //const [users, setUsers] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
 
@@ -32,28 +34,29 @@ export const AuthContextProvider = (props) => {
   };
 
   const signupHandler = async (email, name, password) => {
-    const postConfig = {
+    const putConfig = {
       url: 'http://localhost:8080/auth/signup',
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
+      body: {
         email: email,
         password: password,
         name: name,
-      }),
+      },
     };
-    const createTask = () => {
-
+    const createTask = (response) => {
+      console.log('resposta: ', response);
     };
-    httpObj.sendRequest(postConfig, createTask);
+    httpObj.sendRequest(putConfig, createTask);
   };
 
   return (
     <AuthContext.Provider
       value={{
-        users: users,
+        isLoading: httpObj.isLoading,
+        error: httpObj.error,
         isLoggedIn: isLoggedIn,
         email: email,
         onLogin: loginHandler,

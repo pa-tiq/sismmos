@@ -14,6 +14,11 @@ const useHttp = () => {
         headers: requestConfig.headers ? requestConfig.headers : {},
       });
       if (!response.ok) {
+        if (response.status === 422) {
+          throw new Error(
+            "Esse e-mail já está sendo usado."
+          );
+        }
         throw new Error('Request failed!');
       }
       const data = await response.json();
