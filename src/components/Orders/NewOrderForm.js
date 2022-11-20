@@ -22,16 +22,6 @@ const NewOrderForm = (props) => {
     const enteredTipo = tipoRef.current.value;
     const enteredStatus = statusRef.current.value;
 
-    const date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let zero = '';
-    if (minutes < 10) zero = '0';
-    let currentDate = `${day}/${month}/${year} ${hours}:${zero}${minutes}`;
-
     if (
       enteredMaterial.trim().length > 0 &&
       enteredRequerente.trim().length > 0 &&
@@ -39,6 +29,16 @@ const NewOrderForm = (props) => {
       enteredTipo.trim().length > 0 &&
       enteredStatus.trim().length > 0
     ) {
+      const date = new Date();
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      let zero = '';
+      if (minutes < 10) zero = '0';
+      let currentDate = `${day}/${month}/${year} ${hours}:${zero}${minutes}`;
+
       const order = {
         status: enteredStatus,
         ultima_atualizacao: currentDate,
@@ -53,7 +53,6 @@ const NewOrderForm = (props) => {
         order.criador = props.order.criador;
       }
       props.onEnterOrder(order);
-
     }
   };
 
