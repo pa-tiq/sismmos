@@ -12,24 +12,21 @@ const OrderProvider = (props) => {
 
   const removeOrderHandler = async (orderId) => {
     const deleteConfig = {
-      url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${orderId}.json`,
+      //url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${orderId}.json`,
+      url: `http://localhost:8080/orders/order/${orderId}`,
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + authContext.token,
       },
     };
     const createTask = () => {
-      removeOrder(orderId);
+      const updatedItems = orders.filter((item) => {
+        return item.id !== orderId;
+      });
+      setOrders(updatedItems);
+      setOrderID((prevData) => prevData - 1);
     };
     httpObj.sendRequest(deleteConfig, createTask);
-  };
-
-  const removeOrder = (id) => {
-    const updatedItems = orders.filter((item) => {
-      return item.id !== id;
-    });
-    setOrders(updatedItems);
-    setOrderID((prevData) => prevData - 1);
   };
 
   const updateOrderHandler = async (order) => {
@@ -72,29 +69,25 @@ const OrderProvider = (props) => {
       },
     };
     const createTask = () => {
-      updateOrder(order);
+      const updatedItems = [...orders];
+      updatedItems[order.idx - 1] = order;
+      setOrders(updatedItems);
     };
     httpObj.sendRequest(updateConfig, createTask);
   };
 
-  const updateOrder = (order) => {
-    const updatedItems = [...orders];
-    updatedItems[order.idx - 1] = order;
-    setOrders(updatedItems);
-  };
-
-  function createFormData(order) {
-    const formData = new FormData();
-    formData.append('material', order.material);
-    formData.append('requerente', order.requerente);
-    formData.append('tipo', order.tipo);
-    formData.append('prioridade', order.prioridade);
-    formData.append('status', order.status);
-    formData.append('ultima_atualizacao', order.ultima_atualizacao);
-    formData.append('log', order.log);
-    formData.append('criador', order.criador);
-    return formData;
-  }
+  //function createFormData(order) {
+  //  const formData = new FormData();
+  //  formData.append('material', order.material);
+  //  formData.append('requerente', order.requerente);
+  //  formData.append('tipo', order.tipo);
+  //  formData.append('prioridade', order.prioridade);
+  //  formData.append('status', order.status);
+  //  formData.append('ultima_atualizacao', order.ultima_atualizacao);
+  //  formData.append('log', order.log);
+  //  formData.append('criador', order.criador);
+  //  return formData;
+  //}
 
   const fetchOrdersHandler = async () => {
     const requestConfig = {
@@ -104,7 +97,7 @@ const OrderProvider = (props) => {
         Authorization: 'Bearer ' + authContext.token,
       },
     };
-    const updateOrders = (response) => {
+    const createTask = (response) => {
       const newOrders = response.orders;
       const loadedOrders = [];
       let index = 1;
@@ -126,7 +119,7 @@ const OrderProvider = (props) => {
       setOrderID(index);
       setOrders(loadedOrders);
     };
-    httpObj.sendRequest(requestConfig, updateOrders);
+    httpObj.sendRequest(requestConfig, createTask);
   };
 
   const postOrderHandler = async (order) => {
@@ -165,15 +158,11 @@ const OrderProvider = (props) => {
         log: order.log,
         criador: orderData.criador,
       };
-      addOrderHandler(loadedOrder);
+      loadedOrder.idx = `${orderID}`;
+      setOrders((prevData) => prevData.concat(loadedOrder));
+      setOrderID((prevData) => prevData + 1);
     };
     httpObj.sendRequest(postConfig, createTask);
-  };
-
-  const addOrderHandler = (order) => {
-    order.idx = `${orderID}`;
-    setOrders((prevData) => prevData.concat(order));
-    setOrderID((prevData) => prevData + 1);
   };
 
   const getOrderLog = (orderId) => {

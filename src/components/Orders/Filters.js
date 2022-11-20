@@ -21,12 +21,15 @@ const Filters = (props) => {
       prioridade: [''],
       tipo: [''],
       status: [''],
-    }
-    orders.forEach((order)=>{
-      if(!allvalues.requerente.slice(1).includes(order.requerente)) allvalues.requerente.push(order.requerente);
-      if(!allvalues.prioridade.slice(1).includes(order.prioridade)) allvalues.prioridade.push(order.prioridade);
-      if(!allvalues.tipo.slice(1).includes(order.tipo)) allvalues.tipo.push(order.tipo);
-      if(!allvalues.status.slice(1).includes(order.status)) allvalues.status.push(order.status);
+    };
+    orders.forEach((order) => {
+      if (!allvalues.requerente.slice(1).includes(order.requerente))
+        allvalues.requerente.push(order.requerente);
+      if (!allvalues.prioridade.slice(1).includes(order.prioridade))
+        allvalues.prioridade.push(order.prioridade);
+      if (!allvalues.tipo.slice(1).includes(order.tipo)) allvalues.tipo.push(order.tipo);
+      if (!allvalues.status.slice(1).includes(order.status))
+        allvalues.status.push(order.status);
     });
     setValues(allvalues);
   }, [orders]);
@@ -44,16 +47,16 @@ const Filters = (props) => {
   };
 
   const requerenteChangeHandler = (e) => {
-    props.onSelectChange('requerente',e.target.value);
-  };  
+    props.onSelectChange('requerente', e.target.value);
+  };
   const prioridadeChangeHandler = (e) => {
-    props.onSelectChange('prioridade',e.target.value);
-  };  
+    props.onSelectChange('prioridade', e.target.value);
+  };
   const tipoChangeHandler = (e) => {
-    props.onSelectChange('tipo',e.target.value);
-  };  
+    props.onSelectChange('tipo', e.target.value);
+  };
   const statusChangeHandler = (e) => {
-    props.onSelectChange('status',e.target.value);
+    props.onSelectChange('status', e.target.value);
   };
 
   const changeHandlers = {
@@ -67,7 +70,12 @@ const Filters = (props) => {
     if (refs[key]) {
       return (
         <Card className={classes.filters} key={`filter_${key}`}>
-          <Select reff={refs[key]} label={key} options={values[key]} onChange={changeHandlers[key]}/>
+          <Select
+            reff={refs[key]}
+            label={key}
+            options={values[key]}
+            onChange={changeHandlers[key]}
+          />
         </Card>
       );
     } else {
@@ -88,7 +96,6 @@ const Filters = (props) => {
     <div className={classes.search_and_filters}>
       <Card className={classes.search}>
         <Input
-          className={classes.searchInput}
           label='Pesquisa'
           type='input'
           id='search'

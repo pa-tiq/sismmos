@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
+import React from "react";
 import classes from "./Select.module.css";
 
 const Select = (props) => {
   return (
-    <Fragment>
+    <div className={classes.control}>
       <label htmlFor={props.label} className={classes.label}>
         {`${props.label.charAt(0).toUpperCase() + props.label.slice(1)}`}
       </label>
@@ -27,7 +27,7 @@ const Select = (props) => {
           );
         })}
       </select>
-    </Fragment>
+    </div>
   );
 };
 
