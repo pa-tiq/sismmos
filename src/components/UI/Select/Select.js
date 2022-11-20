@@ -18,7 +18,6 @@ const Select = (props) => {
         {props.options.map((option, idx) => {
           return (
             <option
-              className={classes.options}
               key={`option_${props.label}_${idx}`}
               value={option}
             >

@@ -6,11 +6,8 @@
 }
 
 .select{
-  margin-left: 1rem;
-  margin-right: 1rem;
   flex:3;
   display: block;
-  width: 95%;
   font: inherit;
   padding: 0.35rem 0.35rem;
   border-radius: 6px;
@@ -30,17 +27,5 @@
   margin-bottom: 0.5rem;
   display: block;
 }
-
-.option {
-  margin-left: 2rem;
-  margin-right: 1rem;
-  display: flex;
-  width: 95%;
-  font: inherit;
-  padding: 0.2rem;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-}
-
 
 
