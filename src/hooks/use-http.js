@@ -14,22 +14,24 @@ const useHttp = () => {
         headers: requestConfig.headers ? requestConfig.headers : {},
       });
       if (!response.ok) {
-        if (response.status === 422) {
-          throw new Error(
-            "Esse e-mail já está sendo usado."
-          );
+        if(requestConfig.method === 'POST'){
+          if (response.status === 422) {
+            throw new Error(
+              "Esse e-mail já está sendo usado."
+            );
+          }
+          if (response.status === 401) {
+            throw new Error(
+              "Senha errada."
+            );
+          }        
+          if (response.status === 404) {
+            throw new Error(
+              "Não tem nenhum usuário cadastrado com esse e-mail."
+            );
+          }
         }
-        if (response.status === 401) {
-          throw new Error(
-            "Senha errada."
-          );
-        }        
-        if (response.status === 404) {
-          throw new Error(
-            "Não tem nenhum usuário cadastrado com esse e-mail."
-          );
-        }
-        throw new Error('Request failed!');
+        throw new Error('A requisição falhou.');
       }
       const data = await response.json();
       functionToUse(data);

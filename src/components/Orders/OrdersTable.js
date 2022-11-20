@@ -97,7 +97,6 @@ const OrdersTable = (props) => {
   let content = ordersTable;
 
   if (props.error) {
-    console.log(props.error.substring(0,12));
     let error = props.error.substring(0,12)==='NetworkError' ? 'Erro: acho que vc tá offline' : props.error;
     content = 
       <Fragment>

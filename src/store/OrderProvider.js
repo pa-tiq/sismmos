@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
-import useHttp from "../hooks/use-http";
-import OrderContext from "./order-context";
+import React, { useState, useEffect, useContext } from 'react';
+import useHttp from '../hooks/use-http';
+import OrderContext from './order-context';
+import AuthContext from './auth-context';
 
 const OrderProvider = (props) => {
   const httpObj = useHttp();
+  const authContext = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [orderID, setOrderID] = useState(1);
   const [constraints, setConstraints] = useState({});
@@ -11,9 +13,9 @@ const OrderProvider = (props) => {
   const removeOrderHandler = async (orderId) => {
     const deleteConfig = {
       url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${orderId}.json`,
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     const createTask = () => {
@@ -47,6 +49,7 @@ const OrderProvider = (props) => {
       }
     }
     order.log = logNovo;
+
     const orderToUpdate = {
       status: order.status,
       ultima_atualizacao: order.ultima_atualizacao,
@@ -55,13 +58,17 @@ const OrderProvider = (props) => {
       prioridade: order.prioridade,
       tipo: order.tipo,
       log: order.log,
+      criador: order.criador,
     };
+
     const updateConfig = {
-      url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${order.id}.json`,
-      method: "PATCH",
+      //url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${order.id}.json`,
+      url: `http://localhost:8080/orders/order/${order.id}`,
+      method: 'PUT',
       body: orderToUpdate,
       headers: {
         "Content-Type": "application/json",
+        Authorization: 'Bearer ' + authContext.token,
       },
     };
     const createTask = () => {
@@ -76,10 +83,26 @@ const OrderProvider = (props) => {
     setOrders(updatedItems);
   };
 
+  function createFormData(order) {
+    const formData = new FormData();
+    formData.append('material', order.material);
+    formData.append('requerente', order.requerente);
+    formData.append('tipo', order.tipo);
+    formData.append('prioridade', order.prioridade);
+    formData.append('status', order.status);
+    formData.append('ultima_atualizacao', order.ultima_atualizacao);
+    formData.append('log', order.log);
+    formData.append('criador', order.criador);
+    return formData;
+  }
+
   const fetchOrdersHandler = async () => {
     const requestConfig = {
       //url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
-      url: "http://localhost:8080/orders/orders",
+      url: 'http://localhost:8080/orders/orders',
+      headers: {
+        Authorization: 'Bearer ' + authContext.token,
+      },
     };
     const updateOrders = (response) => {
       const newOrders = response.orders;
@@ -87,7 +110,7 @@ const OrderProvider = (props) => {
       let index = 1;
       for (const orderKey in newOrders) {
         loadedOrders.push({
-          id: orderKey,
+          id: newOrders[orderKey]._id,
           idx: `${index}`,
           status: newOrders[orderKey].status,
           material: newOrders[orderKey].material,
@@ -96,6 +119,7 @@ const OrderProvider = (props) => {
           prioridade: newOrders[orderKey].prioridade,
           tipo: newOrders[orderKey].tipo,
           log: newOrders[orderKey].log,
+          criador: newOrders[orderKey].criador,
         });
         index++;
       }
@@ -110,27 +134,28 @@ const OrderProvider = (props) => {
       `Log do objeto ${orderID}: "${order.material}" `,
       `Criado em ${order.ultima_atualizacao} `,
     ];
-    let lognew = "";
+    let lognew = '';
     for (const [key, value] of Object.entries(order)) {
-      if (key !== "ultima_atualizacao" && value.length !== 0)
+      if (key !== 'ultima_atualizacao' && value.length !== 0)
         lognew += `${key}:${JSON.stringify(value)} `;
     }
     log.push(lognew);
     order.log = log;
+    order.userId = authContext.userId;
     const postConfig = {
       //url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
-      url: "http://localhost:8080/orders/order",
-      method: "POST",
+      url: 'http://localhost:8080/orders/order',
+      method: 'POST',
       body: order,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + authContext.token,
       },
     };
     const createTask = (orderData) => {
-      console.log(orderData);
       //const generatedId = orderData.name; //firebase-specific: "name" contains generated id
       const loadedOrder = {
-        id: 1,
+        id: orderData.order._id,
         status: order.status,
         ultima_atualizacao: order.ultima_atualizacao,
         material: order.material,
@@ -138,6 +163,7 @@ const OrderProvider = (props) => {
         prioridade: order.prioridade,
         tipo: order.tipo,
         log: order.log,
+        criador: orderData.criador,
       };
       addOrderHandler(loadedOrder);
     };
@@ -166,16 +192,16 @@ const OrderProvider = (props) => {
       `Criado em ${constraints.ultima_atualizacao} `,
     ];
     for (const [key, value] of Object.entries(constraints)) {
-      if (key !== "ultima_atualizacao" && value.length !== 0)
+      if (key !== 'ultima_atualizacao' && value.length !== 0)
         log.push(`${key}:${JSON.stringify(value)}`);
     }
     constraints.log = log;
     const postConfig = {
-      url: "https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json",
-      method: "PUT",
+      url: 'https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json',
+      method: 'PUT',
       body: constraints,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     const createTask = (constraintsData) => {
@@ -195,21 +221,18 @@ const OrderProvider = (props) => {
 
   const updateConstraintsHandler = async (newConst) => {
     const diff = {
-      status:
-        JSON.stringify(newConst.status) === JSON.stringify(constraints.status),
+      status: JSON.stringify(newConst.status) === JSON.stringify(constraints.status),
       requerente:
-        JSON.stringify(newConst.requerente) ===
-        JSON.stringify(constraints.requerente),
+        JSON.stringify(newConst.requerente) === JSON.stringify(constraints.requerente),
       prioridade:
-        JSON.stringify(newConst.prioridade) ===
-        JSON.stringify(constraints.prioridade),
+        JSON.stringify(newConst.prioridade) === JSON.stringify(constraints.prioridade),
       tipo: JSON.stringify(newConst.tipo) === JSON.stringify(constraints.tipo),
     };
     let logNovo = [...constraints.log];
     for (const [key, value] of Object.entries(diff)) {
       if (!value && newConst[key] && newConst[key].length !== 0) {
         const msg = `[${newConst.ultima_atualizacao}] ${key}: ${
-          constraints[key] ? JSON.stringify(constraints[key]) : "[ ]"
+          constraints[key] ? JSON.stringify(constraints[key]) : '[ ]'
         } → ${JSON.stringify(newConst[key])}`;
         logNovo.push(msg);
       }
@@ -225,10 +248,10 @@ const OrderProvider = (props) => {
     };
     const updateConfig = {
       url: `https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json`,
-      method: "PATCH",
+      method: 'PATCH',
       body: updatedConstraint,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     const createTask = () => {
@@ -239,7 +262,7 @@ const OrderProvider = (props) => {
 
   const fetchConstraintsHandler = async () => {
     const requestConfig = {
-      url: "https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json",
+      url: 'https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json',
     };
     const updateConstraints = (constraints) => {
       let loadedConstraints = {};

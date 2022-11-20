@@ -5,15 +5,19 @@ const AuthContext = React.createContext({
   isLoading: false,
   error: null,
   isLoggedIn: false,
+  token: null,
+  userId: null,
+  email: '',
+  name: '',
   onLogin: (email, password) => {},
   onLogout: () => {},
 });
 
 export const AuthContextProvider = (props) => {
   const httpObj = useHttp();
-  //const [users, setUsers] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
 
@@ -21,7 +25,16 @@ export const AuthContextProvider = (props) => {
     const storedUserLoginInfo = localStorage.getItem('isLoggedIn');
     const storedToken = localStorage.getItem('token');
     const storedExpiryDate = localStorage.getItem('expiryDate');
-    if (!storedToken || !storedExpiryDate) {
+    const storedUserId = localStorage.getItem('userId');
+    const storedEmail = localStorage.getItem('email');
+    const storedName = localStorage.getItem('name');
+    if (
+      !storedToken ||
+      !storedExpiryDate ||
+      !storedUserId ||
+      !storedEmail ||
+      !storedName
+    ) {
       return;
     }
     if (storedUserLoginInfo === '1') {
@@ -33,7 +46,8 @@ export const AuthContextProvider = (props) => {
     }
     const remainingMilliseconds =
       new Date(storedExpiryDate).getTime() - new Date().getTime();
-    const storedUserId = localStorage.getItem('userId');
+    setEmail(storedEmail);
+    setName(storedName);
     setToken(storedToken);
     setUserId(storedUserId);
     setAutoLogout(remainingMilliseconds);
@@ -41,7 +55,6 @@ export const AuthContextProvider = (props) => {
 
   const loginHandler = (email, password) => {
     setEmail(email);
-
     const postConfig = {
       url: 'http://localhost:8080/auth/login',
       method: 'POST',
@@ -56,21 +69,23 @@ export const AuthContextProvider = (props) => {
     const createTask = (response) => {
       setIsLoggedIn(true);
       setToken(response.token);
+      setName(response.name);
+      setEmail(response.email);
       setUserId(response.userId);
-      localStorage.setItem('isLoggedIn','1');
+      localStorage.setItem('isLoggedIn', '1');
       localStorage.setItem('token', response.token);
-      localStorage.setItem('userId', response.userId);      
+      localStorage.setItem('name', response.token);
+      localStorage.setItem('email', response.token);
+      localStorage.setItem('userId', response.userId);
       const remainingMilliseconds = 60 * 60 * 1000;
-      const expiryDate = new Date(
-        new Date().getTime() + remainingMilliseconds
-      );
+      const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
       localStorage.setItem('expiryDate', expiryDate.toISOString());
       setAutoLogout(remainingMilliseconds);
     };
     httpObj.sendRequest(postConfig, createTask);
   };
 
-  const setAutoLogout = milliseconds => {
+  const setAutoLogout = (milliseconds) => {
     setTimeout(() => {
       logoutHandler();
     }, milliseconds);
@@ -79,6 +94,8 @@ export const AuthContextProvider = (props) => {
   const logoutHandler = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
     localStorage.removeItem('userId');
     localStorage.removeItem('expiryDate');
     setIsLoggedIn(false);
@@ -98,8 +115,7 @@ export const AuthContextProvider = (props) => {
         name: name,
       },
     };
-    const createTask = (response) => {
-    };
+    const createTask = (response) => {};
     httpObj.sendRequest(putConfig, createTask);
   };
 
@@ -109,7 +125,10 @@ export const AuthContextProvider = (props) => {
         isLoading: httpObj.isLoading,
         error: httpObj.error,
         isLoggedIn: isLoggedIn,
+        token: token,
+        userId: userId,
         email: email,
+        name: name,
         onLogin: loginHandler,
         onLogout: logoutHandler,
         onSignup: signupHandler,

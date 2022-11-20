@@ -50,6 +50,7 @@ const NewOrderForm = (props) => {
       if(props.editMode){
         order.idx = props.order.idx;
         order.id = props.order.id;
+        order.criador = props.order.criador;
       }
       props.onEnterOrder(order);
 
