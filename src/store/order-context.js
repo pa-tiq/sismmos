@@ -6,7 +6,6 @@ const OrderContext = React.createContext({
   isLoading: false,
   error: null,
   constraints: {},
-  getLog: (orderId) => {},
   addOrder: (order) => {},
   removeOrder: (orderId) => {},
   updateOrder: (order) => {},

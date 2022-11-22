@@ -76,19 +76,6 @@ const OrderProvider = (props) => {
     httpObj.sendRequest(updateConfig, createTask);
   };
 
-  //function createFormData(order) {
-  //  const formData = new FormData();
-  //  formData.append('material', order.material);
-  //  formData.append('requerente', order.requerente);
-  //  formData.append('tipo', order.tipo);
-  //  formData.append('prioridade', order.prioridade);
-  //  formData.append('status', order.status);
-  //  formData.append('ultima_atualizacao', order.ultima_atualizacao);
-  //  formData.append('log', order.log);
-  //  formData.append('criador', order.criador);
-  //  return formData;
-  //}
-
   const fetchOrdersHandler = async () => {
     const requestConfig = {
       //url: "https://react-http-ccf63-default-rtdb.firebaseio.com/orders.json",
@@ -165,16 +152,6 @@ const OrderProvider = (props) => {
     httpObj.sendRequest(postConfig, createTask);
   };
 
-  const getOrderLog = (orderId) => {
-    const getLogConfig = {
-      url: `https://react-http-ccf63-default-rtdb.firebaseio.com/orders/${orderId}/log.json`,
-    };
-    const getLogTask = (orderData) => {
-      console.log(orderData);
-    };
-    httpObj.sendRequest(getLogConfig, getLogTask);
-  };
-
   const putConstraintsHandler = async (constraints) => {
     const log = [
       `Log das restrições de dados: `,
@@ -186,22 +163,23 @@ const OrderProvider = (props) => {
     }
     constraints.log = log;
     const postConfig = {
-      url: 'https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json',
+      //url: 'https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json',
+      url: 'http://localhost:8080/constraints/',
       method: 'PUT',
       body: constraints,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + authContext.token,
       },
     };
     const createTask = (constraintsData) => {
-      console.log(constraintsData);
       const loadedConstraints = {
-        status: constraintsData.status,
-        ultima_atualizacao: constraintsData.ultima_atualizacao,
-        requerente: constraintsData.requerente,
-        prioridade: constraintsData.prioridade,
-        tipo: constraintsData.tipo,
-        log: constraintsData.log,
+        status: constraintsData.constraint.status,
+        ultima_atualizacao: constraintsData.constraint.ultima_atualizacao,
+        requerente: constraintsData.constraint.requerente,
+        prioridade: constraintsData.constraint.prioridade,
+        tipo: constraintsData.constraint.tipo,
+        log: constraintsData.constraint.log,
       };
       setConstraints(loadedConstraints);
     };
@@ -217,6 +195,8 @@ const OrderProvider = (props) => {
         JSON.stringify(newConst.prioridade) === JSON.stringify(constraints.prioridade),
       tipo: JSON.stringify(newConst.tipo) === JSON.stringify(constraints.tipo),
     };
+    console.log(constraints);
+    console.log(newConst);
     let logNovo = [...constraints.log];
     for (const [key, value] of Object.entries(diff)) {
       if (!value && newConst[key] && newConst[key].length !== 0) {
@@ -236,11 +216,13 @@ const OrderProvider = (props) => {
       log: newConst.log,
     };
     const updateConfig = {
-      url: `https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json`,
+      //url: `https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json`,
+      url: `http://localhost:8080/constraints`,
       method: 'PATCH',
       body: updatedConstraint,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + authContext.token,
       },
     };
     const createTask = () => {
@@ -251,9 +233,14 @@ const OrderProvider = (props) => {
 
   const fetchConstraintsHandler = async () => {
     const requestConfig = {
-      url: 'https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json',
+      //url: 'https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json',
+      url: 'http://localhost:8080/constraints',
+      headers: {
+        Authorization: 'Bearer ' + authContext.token,
+      },
     };
-    const updateConstraints = (constraints) => {
+    const updateConstraints = (constr) => {
+      const constraints = constr.constraints[0];
       let loadedConstraints = {};
       if (!constraints) {
         loadedConstraints = {};
@@ -285,7 +272,6 @@ const OrderProvider = (props) => {
         isLoading: httpObj.isLoading,
         error: httpObj.error,
         constraints: constraints,
-        getLog: getOrderLog,
         addOrder: postOrderHandler,
         removeOrder: removeOrderHandler,
         updateOrder: updateOrderHandler,
