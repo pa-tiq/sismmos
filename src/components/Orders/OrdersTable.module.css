@@ -6,30 +6,27 @@
 .table {
   display: inline-table;
   margin: 0;
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-bottom: 0.5rem;
-  max-width: inherit;
-  font-size: large;  
+  margin-top: -0.5rem;
+  margin-bottom: 1.3rem;
+  padding: 0.7rem;
+  width: 100%;
+  font-size: 1.4rem;  
   color: white;
   overflow: auto;
 }
 
 .table_header {
   cursor: pointer;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 5px;
-  max-width: inherit;
+  padding: 0.7rem;
+  padding-top: 0rem;
+  padding-bottom: 1.2rem;
+  min-height: max-content;
+  min-width: max-content;
+  max-height: 1rem;
 }
 
 .table_header_actions {
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 5px;
-  max-width: inherit;
+  padding: 0.7rem;
   color: #dd0db0;
 }
 
@@ -38,18 +35,18 @@
 }
 
 .table_row{
-  max-width: inherit;
+  font: bolder;
 }
 
-.table_data {
-  border-top: 2px solid rgb(239, 233, 233);
-  cursor: auto;
-  padding-right: 25px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 25px;
-  width: min-content;
-  max-width: min-content;
+.table_row_sort{
+  padding:0rem;
+  font-size: 1.6rem;
+  color: #dd0db0;
+}
+
+.table_header_sort {
+  padding: 0rem;
+  vertical-align: bottom;
 }
 
 .button{

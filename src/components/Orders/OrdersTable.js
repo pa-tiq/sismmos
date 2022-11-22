@@ -1,16 +1,16 @@
-import React, { useState, Fragment, useEffect } from "react";
-import classes from "./OrdersTable.module.css";
-import OrderItem from "./OrderItem";
-import Button from "../UI/Button/Button";
+import React, { useState, Fragment, useEffect } from 'react';
+import classes from './OrdersTable.module.css';
+import OrderItem from './OrderItem';
+import Button from '../UI/Button/Button';
 
 const HEADERS = [
-  ["ID", "idx"],
-  ["Material", "material"],
-  ["Requerente", "requerente"],
-  ["Prioridade", "prioridade"],
-  ["Tipo", "tipo"],
-  ["Status", "status"],
-  ["Última Atualização", "ultima_atualizacao"],
+  ['ID', 'idx'],
+  ['Material', 'material'],
+  ['Requerente', 'requerente'],
+  ['Prioridade', 'prioridade'],
+  ['Tipo', 'tipo'],
+  ['Status', 'status'],
+  ['Última Atualização', 'ultima_atualizacao'],
 ];
 
 const OrdersTable = (props) => {
@@ -49,45 +49,39 @@ const OrdersTable = (props) => {
 
   if (orders.length > 0) {
     ordersTable = (
-      <table className={classes.table} key={"table_orders"} id={"table_orders"}>
-        <thead onClick={sort} key={"table_headers"} id={"table_headers"}>
-          <tr
-            className={classes.table_row}
-            key={"headers_row"}
-            id={"headers_row"}
-          >
+      <table className={classes.table}>
+        <thead onClick={sort}>
+          <tr className={classes.table_row_sort}>
             {HEADERS.map((title, index) => {
-              let header = title[0];
+              let arrow = '';
               if (sorting.column === index) {
-                header =
-                  title[0] + (sorting.descending ? " \u2191" : " \u2193");
+                arrow = sorting.descending ? ' \u25B4' : ' \u25BE';
               }
+              return (
+                <th className={classes.table_header_sort} key={`sort_${index}_${title[1]}`}>
+                  {arrow}
+                </th>
+              );
+            })}
+          </tr>
+          <tr className={classes.table_row}>
+            {HEADERS.map((title, index) => {
               return (
                 <th
                   className={classes.table_header}
                   key={`header_${index}_${title[1]}`}
-                  id= {title[1]}
+                  id={title[1]}
                 >
-                  {header}
+                  {title[0]}
                 </th>
               );
             })}
-            <th
-              className={classes.table_header_actions}
-              key={"edit_remove"}
-              id={"edit_remove"}
-            >
-              Ações
-            </th>
+            <th className={classes.table_header_actions}>Ações</th>
           </tr>
         </thead>
-        <tbody
-          className={classes.table_body}
-          key={"table_body"}
-          id={"table_body"}
-        >
+        <tbody className={classes.table_body}>
           {orders.map((row) => (
-            <OrderItem order={row} onHide={props.onHide} key={row.id} id={row.id}/>
+            <OrderItem order={row} onHide={props.onHide} key={row.id} id={row.id} />
           ))}
         </tbody>
       </table>
@@ -97,18 +91,22 @@ const OrdersTable = (props) => {
   let content = ordersTable;
 
   if (props.error) {
-    let error = props.error.substring(0,12)==='NetworkError' ? 'Erro: acho que vc tá offline' : props.error;
-    content = 
+    let error =
+      props.error.substring(0, 12) === 'NetworkError'
+        ? 'Erro: acho que vc tá offline'
+        : props.error;
+    content = (
       <Fragment>
-        <Button onClick={props.onFetch} className={classes.button}>Tentar Novamente</Button>;
-        {props.error && <p className={classes.message}>{error}</p>}
+        <Button onClick={props.onFetch} className={classes.button}>
+          Tentar Novamente
+        </Button>
+        ;{props.error && <p className={classes.message}>{error}</p>}
       </Fragment>
+    );
   }
 
   if (props.loading) {
-    content = (
-      <h2 className={classes.message}>Carregando ordens de serviço...</h2>
-    );
+    content = <h2 className={classes.message}>Carregando ordens de serviço...</h2>;
   }
 
   return <Fragment>{content}</Fragment>;

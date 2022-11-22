@@ -52,14 +52,14 @@ const OrderItem = (props) => {
 
   return (
     <Fragment>
-      <tr className={classes.table_row} key={`row_${order.idx}`} id={`row_${order.idx}`}>
-        <td className={classes.table_data}>{order.idx}</td>
-        <td className={classes.table_data}>{order.material}</td>
-        <td className={classes.table_data}>{order.requerente}</td>
-        <td className={classes.table_data}>{order.prioridade}</td>
-        <td className={classes.table_data}>{order.tipo}</td>
-        <td className={classes.table_data}>{order.status}</td>
-        <td className={classes.table_data}>{order.ultima_atualizacao}</td>
+      <tr className={classes.table_row}>
+        <td>{order.idx}</td>
+        <td>{order.material}</td>
+        <td>{order.requerente}</td>
+        <td>{order.prioridade}</td>
+        <td>{order.tipo}</td>
+        <td>{order.status}</td>
+        <td>{order.ultima_atualizacao}</td>
         <td className={classes.table_button}>
           <button className={classes.details} onClick={showLogHandler} />
           <button className={classes.edit} onClick={showEditHandler} />

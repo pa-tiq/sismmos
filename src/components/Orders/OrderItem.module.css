@@ -1,9 +1,17 @@
 .table_row{
-  max-width: inherit;
+  border: 1px solid #4e4d4e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;  
+  padding: 0.75rem 3.5rem;
 }
 
-.table_data {
-  border-top: 2px solid rgb(239, 233, 233);
+.table_row:hover,
+.table_row:active{
+  box-shadow: 0 2px 8px #741188;
+  cursor:pointer;
+}
+
+.table_row td{
   cursor: auto;
   padding-right: 25px;
   padding-top: 10px;
@@ -14,49 +22,46 @@
 }
 
 .table_button {
-  border-top: 2px solid rgb(239, 233, 233);
-  cursor: auto;
-  padding-right: 0.6rem;
   width: fit-content;
+  height: auto;
   max-width: inherit;
-  display:inline-flex;
+  vertical-align: bottom;
+  margin-left: -5rem;
 }
 
 .remove{
   max-width: 0rem;
-  display: flex;
   background-color: transparent;
   cursor:pointer;
   margin-right: 1rem;
   border:0;
-  font-size: 30px;
+  font-size: 34px;
   color: #dd0db0;
 }
 
 .details,
 .edit{
   max-width: 0rem;
-  display: flex;
   background-color: transparent;
   cursor:pointer;
   margin-right: 2rem;
   border:0;
-  font-size: 30px;
+  font-size: 34px;
   color: #dd0db0;
 }
 
 .details:after{
   content: '\1F50D \FE0E';
-  vertical-align: baseline;
+  vertical-align: inherit;
 }
 
 .edit:after {
   content: '\270E';
-  vertical-align: baseline;
+  vertical-align: inherit;
 }
 
 .remove:after {
   /*content: '\1F5D1';*/
   content: '\1F5D9';
-  vertical-align: baseline;
+  vertical-align: inherit;
 }
