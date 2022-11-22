@@ -13,10 +13,10 @@
 
 .table_row td{
   cursor: auto;
-  padding-right: 25px;
+  padding-right: 16px;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 25px;
+  padding-left: 16px;
   width: fit-content;
   max-width: inherit;
 }

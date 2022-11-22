@@ -10,7 +10,7 @@
 
 .home {
   align-self: center;
-  margin-top: 0.1rem;
+  margin:auto;
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
@@ -21,7 +21,7 @@
 }
 
 .homepage {
-  display: block;
+  display: flex;
   margin-top: -2rem;
   margin-left: 0rem;
   margin-right: 0rem;
