@@ -8,7 +8,7 @@ const MainHeader = () => {
 
   const logoutHandler = () => {
     context.onLogout();
-  }
+  };
 
   return (
     <header className={classes.header}>
@@ -19,7 +19,9 @@ const MainHeader = () => {
             <Fragment>
               <li>
                 <NavLink
-                  className={({ isActive }) => (isActive ? classes.active : undefined)}
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
                   to='/home'
                 >
                   Home
@@ -27,24 +29,31 @@ const MainHeader = () => {
               </li>
               <li>
                 <NavLink
-                  className={({ isActive }) => (isActive ? classes.active : undefined)}
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
                   to='/users'
                 >
                   Users
                 </NavLink>
               </li>
+              {context.email === 'admin@admin.com' && (
+                <li>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? classes.active : undefined
+                    }
+                    to='/admin'
+                  >
+                    Admin
+                  </NavLink>
+                </li>
+              )}
               <li>
                 <NavLink
-                  className={({ isActive }) => (isActive ? classes.active : undefined)}
-                  to='/admin'
-                >
-                  Admin
-                </NavLink>
-              </li>
-              <li>
-              <NavLink
                   className={classes.button}
-                  to='/' onClick={logoutHandler}
+                  to='/'
+                  onClick={logoutHandler}
                 >
                   Logout
                 </NavLink>
@@ -52,23 +61,27 @@ const MainHeader = () => {
             </Fragment>
           ) : (
             <Fragment>
-            <li>
-              <NavLink
-                className={({ isActive }) => (isActive ? classes.active : undefined)}
-                to='/login'
-              >
-                Login
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                className={({ isActive }) => (isActive ? classes.active : undefined)}
-                to='/signup'
-              >
-                Cadastrar
-              </NavLink>
-            </li>
-          </Fragment>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
+                  to='/login'
+                >
+                  Login
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? classes.active : undefined
+                  }
+                  to='/signup'
+                >
+                  Cadastrar
+                </NavLink>
+              </li>
+            </Fragment>
           )}
         </ul>
       </nav>

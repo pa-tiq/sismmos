@@ -10,7 +10,7 @@ const ConstraintForm = (props) => {
 
   useEffect(() => {
     props.updateConstraints(props.field,constraints);
-  },[constraints])
+  },[constraints]);
 
   useEffect(() => {
     if(inputForm.current) inputForm.current.focus();

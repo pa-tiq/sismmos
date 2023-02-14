@@ -74,8 +74,8 @@ export const AuthContextProvider = (props) => {
       setUserId(response.userId);
       localStorage.setItem('isLoggedIn', '1');
       localStorage.setItem('token', response.token);
-      localStorage.setItem('name', response.token);
-      localStorage.setItem('email', response.token);
+      localStorage.setItem('name', response.name);
+      localStorage.setItem('email', response.email);
       localStorage.setItem('userId', response.userId);
       const remainingMilliseconds = 60 * 60 * 1000;
       const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);

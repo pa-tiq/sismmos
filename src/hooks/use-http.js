@@ -14,7 +14,7 @@ const useHttp = () => {
         headers: requestConfig.headers ? requestConfig.headers : {},
       });
       if (!response.ok) {
-        if(requestConfig.method === 'POST'){
+        if(requestConfig.method === 'POST' || requestConfig.method === 'PUT'){
           if (response.status === 422) {
             throw new Error(
               "Esse e-mail já está sendo usado."

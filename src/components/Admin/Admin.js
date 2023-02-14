@@ -32,13 +32,11 @@ const Admin = () => {
       <div className={classes.header}>
         <h1 className={classes.title}>{`Oi Admin!`}</h1>
       </div>
-      <details className={classes.details}>
-        <summary>
+      <div className={classes.details}>
           Restrições de dados
           <button className={classes.button_details} onClick={showLogHandler} />
-        </summary>
         <Constraints />
-      </details>
+      </div>
       {showLog && (
         <ConfirmationForm
           onHide={hideLogHandler}

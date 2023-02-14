@@ -35,7 +35,7 @@ function App() {
                 <Route path='/' element={<Navigate to='/home' />} />
                 <Route path='/login' element={<Navigate to='/home' />} />
                 <Route path='/home' element={<Home />} />
-                <Route path='/admin' element={<Admin />} />
+                { authContext.email === 'admin@admin.com' && <Route path='/admin' element={<Admin />} />}
               </Routes>
             </OrderProvider>
           )}
