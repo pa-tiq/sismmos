@@ -1,9 +1,9 @@
-import React, { useState, useContext, useMemo } from "react";
-import classes from "./Admin.module.css";
-import Card from "../UI/Card/Card";
-import Constraints from "./Constraints";
-import OrderContext from "../../store/order-context";
-import ConfirmationForm from "../UI/ConfirmationForm/ConfirmationForm";
+import React, { useState, useContext, useMemo } from 'react';
+import classes from './Admin.module.css';
+import Card from '../UI/Card/Card';
+import Constraints from './Constraints';
+import OrderContext from '../../store/order-context';
+import ConfirmationForm from '../UI/ConfirmationForm/ConfirmationForm';
 
 const Admin = () => {
   const orderContext = useContext(OrderContext);
@@ -11,9 +11,9 @@ const Admin = () => {
   const [showLog, setShowLog] = useState(false);
 
   const logText = useMemo(() => {
-    let text = "";
+    let text = '';
     constraints.log?.forEach((element) => {
-      text += element + "\n";
+      text += element + '\n';
     });
     return text;
   }, [constraints]);
@@ -32,7 +32,7 @@ const Admin = () => {
       <div className={classes.header}>
         <h1 className={classes.title}>{`Oi Admin!`}</h1>
       </div>
-      <details className={classes.details}>
+      <details className={classes.details} open>
         <summary>
           Restrições de dados
           <button className={classes.button_details} onClick={showLogHandler} />
@@ -42,9 +42,9 @@ const Admin = () => {
       {showLog && (
         <ConfirmationForm
           onHide={hideLogHandler}
-          message={"Histórico das Restrições de Dados"}
+          message={'Histórico das Restrições de Dados'}
           message_secondary={logText}
-          button_text={"Ok"}
+          button_text={'Ok'}
           submitHandler={hideLogHandler}
         />
       )}
