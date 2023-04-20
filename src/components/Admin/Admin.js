@@ -33,8 +33,10 @@ const Admin = () => {
         <h1 className={classes.title}>{`Oi Admin!`}</h1>
       </div>
       <details className={classes.details} open>
-        <summary>Restrições de dados</summary>
-        <button className={classes.button_details} onClick={showLogHandler} />
+        <summary>
+          Restrições de Dados
+          <button className={classes.button_details} onClick={showLogHandler} />
+        </summary>
         <Constraints />
       </details>
       {showLog && (

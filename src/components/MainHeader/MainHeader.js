@@ -27,7 +27,7 @@ const MainHeader = () => {
                   Home
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? classes.active : undefined
@@ -36,7 +36,7 @@ const MainHeader = () => {
                 >
                   Users
                 </NavLink>
-              </li>
+              </li> */}
               {context.email === 'admin@admin.com' && (
                 <li>
                   <NavLink

@@ -46,12 +46,16 @@ const Constraints = () => {
       setConstrObj(newConst);
 
       const constraintsAreEqual =
-        JSON.stringify(newConst[`${field}`]) === JSON.stringify(constraints[`${field}`]);
+        JSON.stringify(newConst[`${field}`]) ===
+        JSON.stringify(constraints[`${field}`]);
       const newConstraintEmpty =
         newConst[`${field}`].length === 0 ||
         (newConst[`${field}`].length === 1 && newConst[`${field}`][0] === '');
       const constraintExistsinDB = constraints[`${field}`];
-      if (constraintsAreEqual || (newConstraintEmpty && !constraintExistsinDB)) {
+      if (
+        constraintsAreEqual ||
+        (newConstraintEmpty && !constraintExistsinDB)
+      ) {
         return;
       }
       setUpdateIsValid(true);
@@ -61,12 +65,15 @@ const Constraints = () => {
   let constr = [['status'], ['requerente'], ['prioridade'], ['tipo']];
 
   useEffect(() => {
+    const consObj = {};
     if (constraints) {
       for (const [key, value] of Object.entries(constraints)) {
         if (key !== 'ultima_atualizacao' && key !== 'log' && value) {
           constr.forEach((element) => {
             if (element[0] === key) {
+              consObj[`${element[0]}`] = [];
               value.forEach((el) => {
+                consObj[`${element[0]}`].push(el);
                 element.push(el);
               });
             }
@@ -75,6 +82,7 @@ const Constraints = () => {
       }
     }
     setConstrArr(constr);
+    setConstrObj(consObj);
   }, []);
 
   return (
