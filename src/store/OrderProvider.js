@@ -65,7 +65,7 @@ const OrderProvider = (props) => {
       method: 'PUT',
       body: orderToUpdate,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: 'Bearer ' + authContext.token,
       },
     };
@@ -190,11 +190,14 @@ const OrderProvider = (props) => {
 
   const updateConstraintsHandler = async (newConst) => {
     const diff = {
-      status: JSON.stringify(newConst.status) === JSON.stringify(constraints.status),
+      status:
+        JSON.stringify(newConst.status) === JSON.stringify(constraints.status),
       requerente:
-        JSON.stringify(newConst.requerente) === JSON.stringify(constraints.requerente),
+        JSON.stringify(newConst.requerente) ===
+        JSON.stringify(constraints.requerente),
       prioridade:
-        JSON.stringify(newConst.prioridade) === JSON.stringify(constraints.prioridade),
+        JSON.stringify(newConst.prioridade) ===
+        JSON.stringify(constraints.prioridade),
       tipo: JSON.stringify(newConst.tipo) === JSON.stringify(constraints.tipo),
     };
     let logNovo = [...constraints.log];
@@ -220,7 +223,7 @@ const OrderProvider = (props) => {
     const updateConfig = {
       //url: `https://react-http-ccf63-default-rtdb.firebaseio.com/constraints.json`,
       url: `http://localhost:8080/constraints/${constraints.id}`,
-      method: 'PUT',
+      method: 'PATCH',
       body: updatedConstraint,
       headers: {
         'Content-Type': 'application/json',
@@ -248,7 +251,7 @@ const OrderProvider = (props) => {
         loadedConstraints = {};
       } else {
         loadedConstraints = {
-          id:constraints._id,
+          id: constraints._id,
           status: constraints.status,
           requerente: constraints.requerente,
           prioridade: constraints.prioridade,
